@@ -50,7 +50,7 @@ struct PlanView: View {
       .navigationTitle(L10n.string("Plan a trip"))
       .navigationBarTitleDisplayMode(.inline)
       .toolbar {
-        ToolbarItem(placement: .topBarLeading) { MenuButton(plain: true) }
+        ToolbarItem(placement: .topBarLeading) { if !model.isWide { MenuButton(plain: true) } }
         ToolbarItem(placement: .topBarTrailing) {
           Button { showOptions = true } label: { Image(systemName: "slider.horizontal.3") }
             .accessibilityLabel(Text("Trip options"))
@@ -564,8 +564,11 @@ struct JourneyDetailView: View {
     List {
       Section { JourneySteps(journey: journey) }
       Section {
-        Button { model.showOnMap(journey) } label: {
-          Label("Show on map", systemImage: "map").font(.body.weight(.semibold))
+        // The wide layout draws the journey on the map beside the panel as soon as its steps open.
+        if !model.isWide {
+          Button { model.showOnMap(journey) } label: {
+            Label("Show on map", systemImage: "map").font(.body.weight(.semibold))
+          }
         }
         reminderRow(summary)
       } footer: {
@@ -582,6 +585,8 @@ struct JourneyDetailView: View {
       }
     }
     .task { reminder = (await Reminders.isScheduled(journey)) ? .on(journey.departure) : .off }
+    .onAppear { if model.isWide { model.showOnMap(journey) } }
+    .onDisappear { if model.isWide, model.mapJourney?.id == journey.id { model.clearJourney() } }
   }
 
   @ViewBuilder private func reminderRow(_ summary: JourneySummary) -> some View {

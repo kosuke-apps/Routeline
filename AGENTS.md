@@ -10,7 +10,7 @@ The author's general workspace rules (outside this repository) apply too; this f
 - Intended users: Madison bus riders, first the author. Later other cities (GTFS is a standard).
 - Core user journey: open the app, see the map at once, see where the buses are, tap a stop, see when the next bus
   really arrives.
-- Out of scope for now: fares, other cities, Android, iPad, widgets, push notifications (they need the paid Apple Developer Program or a server).
+- Out of scope for now: fares, other cities, Android, widgets, multiple windows, push notifications (they need the paid Apple Developer Program or a server).
 - UX is the main goal: it must feel instant and smooth. Live data comes first, the timetable is a fallback.
 
 ## Technical context
@@ -186,6 +186,22 @@ The author's general workspace rules (outside this repository) apply too; this f
   - Map long-press drops a pin and offers directions to or from it; a stop's sheet has a Directions button.
   - `App/RootView.swift`: map, status pill, controls, focus chip, sheet routing (stop and bus share one sheet
     identity so selecting another does not re-present it).
+  - iPad: one app for iPhone and iPad (`TARGETED_DEVICE_FAMILY` 1,2, all four orientations on iPad, no full-screen requirement,
+    one window). The layout goes by the window's width, not the device (`App/Layout/WideLayout.swift`): under 700 pt (every
+    iPhone, Split View at a third or a half, Slide Over, a small Mac window) it is the phone layout above, unchanged; from 700 pt
+    (`AppModel.isWide`, set by `RootView` from the window's width) it is the wide one. The wide layout keeps the one map where
+    it is (the map must never be re-created: it would reload its style and lose the camera), and lays over it a rail of round
+    buttons at the left (`WideRail`: the three modes and Settings, in place of the drawer) and a panel to the right of the rail
+    (`WidePanel`, 380 pt, 340 under 900 pt) that holds what the sheets hold on a phone (stop, bus, trip, journey, search, routes,
+    settings) or, with nothing selected, the service board or the planner while that mode is on. `WideLayout.showsPanel` says
+    when. `PlanView` and `InfoView` stay in the panel while their mode is on and a stop opened over them is closed again. In the
+    wide layout the list stays beside the map: `focusRoute`, `focusAlert`, `focusBuses` and a favourite stop do not change the
+    mode, a journey opened in the planner is drawn on the map at once (`showOnMap`, and `JourneyDetailView` appearing), and the
+    focus chip has no "back" (`returnTarget`). `MapState.leadingInset` and `wide` replace `bottomInset` in the camera (`CameraMath`:
+    the phone's arithmetic is unchanged and tested to be), and the map's logo moves right of the panel. Do not use `.inspector`
+    (a split view controller around the map: MapLibre removes an observer it never added and the app aborts) and do not move
+    `MapContainer` in the view tree. Keyboard: `.commands` in `HeadwayApp` (⌘1/2/3, ⌘F, ⌘R, ⌘L, ⇧⌘R, ⌘, and Escape = `closeTop`);
+    in the search panel the arrow keys move the highlighted result and Return opens it. Design and checks: `docs/ipad-design.md`.
   - Language: Settings > Behavior > Language (system default / English / 日本語, `Preferences.language`). `LanguageState.shared`
     (`App/Support/Language.swift`, observable) holds the chosen language, its `Locale` (the language with the phone's
     region, so units and 12/24 hours still follow the phone) and its `.lproj` bundle; `LanguageRoot` puts the locale into
@@ -322,7 +338,7 @@ The author's general workspace rules (outside this repository) apply too; this f
 - Publishing: the data terms contain an indemnification clause (see `docs/data-sources.md`); the App Store needs the
   paid Developer Program; map tiles need the OSM attribution (already in Settings and the map's info button).
 - Ideas not started: notifications when a bus is near, a push relay fed by the collector, widgets, other cities (GTFS is generic, the feed URLs and
-  basemap box are the Madison-specific parts), iPad layout.
+  basemap box are the Madison-specific parts).
 
 ## Definition of done
 

@@ -7,25 +7,32 @@ struct RootView: View {
   /// Height of the stop and bus sheets in their resting position.
   private static let detailHeight: CGFloat = 320
 
+  @State private var windowWidth: CGFloat = 0
+  @Environment(\.horizontalSizeClass) private var sizeClass
+
   var body: some View {
+    let wide = model.isWide
+    let panelShown = wide && WideLayout.showsPanel(mode: model.mode, sheet: model.sheet)
+    let leading = panelShown ? WideLayout.leadingInset(forWidth: windowWidth) : 0
     ZStack(alignment: .top) {
-      MapContainer(bottomInset: model.sheet?.isDetail == true ? Self.detailHeight : 0)
+      MapContainer(bottomInset: model.sheet?.isDetail == true && !wide ? Self.detailHeight : 0, leadingInset: leading, wide: wide)
         .ignoresSafeArea()
-        .accessibilityHidden(model.mode != .map)
-      if model.mode == .map {
+        .accessibilityHidden(model.mode != .map && !wide)
+      if model.mode == .map || wide {
         VStack(spacing: 8) {
           StatusPill()
           if model.focus.isActive { FocusChip() }
           if !model.routeChoices.isEmpty { RouteChooser() }
           if case .failed(let message) = model.phase { FailureBanner(message: message) }
         }
-        .padding(.top, 8)
-        .padding(.horizontal, 60)
+        .modifier(StatusColumnStyle(wide: wide, leading: max(leading, WideLayout.panelOrigin)))
 
-        MenuButton()
-          .frame(maxWidth: .infinity, alignment: .leading)
-          .padding(.top, 2)
-          .padding(.leading, 12)
+        if !wide {
+          MenuButton()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, 2)
+            .padding(.leading, 12)
+        }
 
         Controls()
           .frame(maxWidth: .infinity, alignment: .trailing)
@@ -33,26 +40,47 @@ struct RootView: View {
           .padding(.trailing, 12)
 
         // A stop, a bus or a journey that was put away stays on the map; this is the way back to it.
-        if model.sheet == nil, model.hasDock {
+        if model.mode == .map, model.sheet == nil, model.hasDock {
           Dock()
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
             .padding(.trailing, 12)
             .padding(.bottom, 30)
         }
       }
-      if model.mode == .info {
-        InfoView().background(Color(.systemGroupedBackground).ignoresSafeArea())
+      if wide {
+        WideRail()
+          .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+          .padding(.leading, WideLayout.railMargin)
+          .padding(.top, 12)
+        if panelShown {
+          WidePanel(width: WideLayout.panelWidth(forWidth: windowWidth))
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .padding(.leading, WideLayout.panelOrigin)
+            .padding(.vertical, 12)
+            .transition(.opacity)
+        }
+      } else {
+        if model.mode == .info {
+          InfoView().background(Color(.systemGroupedBackground).ignoresSafeArea())
+        }
+        if model.mode == .plan {
+          PlanView().background(Color(.systemGroupedBackground).ignoresSafeArea())
+        }
+        if !model.menuOpen, model.mode == .map || !model.planPushed {
+          EdgeSwipeArea()
+        }
+        MenuDrawer()
       }
-      if model.mode == .plan {
-        PlanView().background(Color(.systemGroupedBackground).ignoresSafeArea())
-      }
-      if !model.menuOpen, model.mode == .map || !model.planPushed {
-        EdgeSwipeArea()
-      }
-      MenuDrawer()
     }
-    // Swiping a stop or bus sheet down puts it into the dock instead of losing it.
-    .sheet(item: Binding(get: { model.sheet }, set: { if $0 == nil { model.minimizeSheet() } else { model.sheet = $0 } })) { sheet in
+    .animation(.snappy(duration: 0.22), value: panelShown)
+    .background(GeometryReader { Color.clear.preference(key: WindowWidthKey.self, value: $0.size.width) })
+    .onPreferenceChange(WindowWidthKey.self) { width in
+      windowWidth = width
+      model.isWide = WideLayout.isWide(width: width, horizontalSizeClass: sizeClass)
+    }
+    .onChange(of: sizeClass) { _, _ in model.isWide = WideLayout.isWide(width: windowWidth, horizontalSizeClass: sizeClass) }
+    // Swiping a stop or bus sheet down puts it into the dock instead of losing it. The wide layout has a panel instead.
+    .sheet(item: Binding(get: { model.isWide ? nil : model.sheet }, set: { if $0 == nil { model.minimizeSheet() } else { model.sheet = $0 } })) { sheet in
       switch sheet {
       case .stop(let id):
         StopSheet(stopID: id).modifier(DetailSheetStyle(height: Self.detailHeight))
@@ -100,6 +128,21 @@ struct RootView: View {
     case .system: nil
     case .light: .light
     case .dark: .dark
+    }
+  }
+}
+
+/// The status pill, focus chip and route chooser at the top: across the phone with 60 points at each side, or in the wide layout
+/// centred over the part of the map the panel and the buttons leave free, and never wider than 560 points.
+private struct StatusColumnStyle: ViewModifier {
+  let wide: Bool
+  let leading: CGFloat
+
+  @ViewBuilder func body(content: Content) -> some View {
+    if wide {
+      content.frame(maxWidth: 560).padding(.top, 8).padding(.leading, leading).padding(.trailing, 72)
+    } else {
+      content.padding(.top, 8).padding(.horizontal, 60)
     }
   }
 }

@@ -6,6 +6,9 @@ struct SearchSheet: View {
   @Environment(AppModel.self) private var model
   @Environment(\.dismiss) private var dismiss
   @State private var query = ""
+  /// The wide layout (with a keyboard): the result Return opens, moved by the arrow keys, and the field taking the keys at once.
+  @State private var highlighted = 0
+  @State private var searching = false
 
   var body: some View {
     NavigationStack {
@@ -26,15 +29,37 @@ struct SearchSheet: View {
           if results.isEmpty {
             ContentUnavailableView.search(text: query)
           } else {
-            ForEach(results) { row($0) }
+            ForEach(Array(results.enumerated()), id: \.element.id) { index, stop in
+              row(stop).listRowBackground(model.isWide && index == min(highlighted, results.count - 1) ? Color.accentColor.opacity(0.14) : nil)
+            }
           }
         }
       }
       .navigationTitle(L10n.string("Find a stop"))
       .navigationBarTitleDisplayMode(.inline)
-      .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: Text(L10n.string("Stop name or number")))
+      .searchable(
+        text: $query, isPresented: $searching, placement: .navigationBarDrawer(displayMode: .always),
+        prompt: Text(L10n.string("Stop name or number"))
+      )
       .textInputAutocapitalization(.never)
-      .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Done") { dismiss() } } }
+      .onAppear { if model.isWide { searching = true } }
+      .onChange(of: query) { _, _ in highlighted = 0 }
+      .onSubmit(of: .search) {
+        guard model.isWide else { return }
+        let results = search(query)
+        if !results.isEmpty { model.selectStop(results[min(highlighted, results.count - 1)].id) }
+      }
+      .onKeyPress(.downArrow) {
+        guard model.isWide else { return .ignored }
+        highlighted = min(highlighted + 1, max(0, search(query).count - 1))
+        return .handled
+      }
+      .onKeyPress(.upArrow) {
+        guard model.isWide else { return .ignored }
+        highlighted = max(0, highlighted - 1)
+        return .handled
+      }
+      .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Done") { if model.isWide { model.sheet = nil } else { dismiss() } } } }
     }
   }
 

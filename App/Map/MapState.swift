@@ -59,6 +59,10 @@ struct MapState {
   var isDark = false
   /// Height of the bottom sheet that covers the map, so the camera can centre in the visible part.
   var bottomInset: CGFloat = 0
+  /// Width of the part of the map's left side that the panel of the wide layout covers (the rail and the panel), and whether
+  /// the layout is the wide one: it has no bottom sheet.
+  var leadingInset: CGFloat = 0
+  var wide = false
   var locationAuthorized = false
   /// Routes with an alert in force (drawn dashed) and buses away from their usual line (ringed in orange).
   var alertRoutes: Set<String> = []

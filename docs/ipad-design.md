@@ -1,6 +1,6 @@
 # Headway on iPad: design note
 
-Status: proposal, nothing implemented yet. Written 2026-10-31 for version 0.7.5 (`81ff05e`).
+Status: implemented in the 0.8 series (see the notes marked **Changed** below, where the build taught something). Written 2026-10-31 for version 0.7.5 (`81ff05e`).
 
 Goal: a real iPad app, not the iPhone screen stretched. The same `.ipa` runs on iPhone and iPad; the iPhone layout does not
 change. On an Apple silicon Mac the app can run as "Designed for iPad" from Xcode (that is how it is tested; a Mac download is
@@ -75,8 +75,9 @@ would reload the style and lose the camera. The wide layout is built from overla
 
 ### 3.2 Navigation rail instead of the drawer
 
-A 64 pt icon rail at the left edge: Map, Service info, Plan a trip, then Routes, Find a stop, Settings, with the alert count
-badge on Service info. It replaces the hamburger button and the drawer in the wide layout; the drawer stays in compact.
+A 56 pt rail of round buttons floating at the left edge: Map, Service info, Plan a trip, then Settings, with the alert count
+badge on Service info (**Changed:** Routes and Find a stop stay where they are, with the round buttons at the right, which open
+the panel; there was no reason to have them twice). It replaces the hamburger button and the drawer in the wide layout; the drawer stays in compact.
 
 Why: on a large screen it costs a few points and saves a tap on every switch; the drawer's dimmed map hides what the rider is
 watching. The edge-swipe strip (`EdgeSwipeArea`) is not used in the wide layout: it would collide with the system's Split View
@@ -122,9 +123,11 @@ The panel uses the same `PlanView` / `InfoView` code, so only the container and 
 
 ### 3.5 Settings
 
-A trailing inspector (`.inspector`, iOS 17) about 380 pt wide, so the map stays visible while colours, line widths or the marker
-size are changed (the reason the compact layout uses a half-height sheet). Sub-screens (data, notifications, licences, trip
-options, the notification routes) push inside it. In compact width the inspector becomes the sheet it is today.
+**Changed:** the settings are the panel's content too, not an inspector. The proposal was a trailing `.inspector`; the first
+build with it aborted in the iPad simulator, because `.inspector` puts the whole screen in a split view controller and, when it
+moves the map's view between its columns, MapLibre removes a key-value observer it never added (an Objective-C exception in
+`MLNMapView` on leaving the window). The map stays visible beside the panel, so colours, line widths and the marker size can
+still be watched while they change, which was the point.
 
 ### 3.6 Smaller pieces
 
@@ -220,8 +223,7 @@ Planned checks (none run yet; section 1 only records that the build links):
 4. **`PlanView` and `InfoView` in a panel.** `PlanView` owns a `NavigationStack(path:)`, sets `model.planPushed`, and uses its own
    sheets (place picker, options, saved places); in a 380 pt panel the sheets are presented over the whole window, which is
    acceptable, and `.presentationDetents` there must be tested. `InfoView` calls `focusRoute`, which changes `mode`.
-5. **Settings as an inspector.** `.inspector` needs iOS 17 (the minimum is 17.0, so it is available) and changes to a sheet in
-   compact width; its sizing (`inspectorColumnWidth`) and behaviour next to a map that keeps updating need a real check.
+5. **Settings as an inspector.** Happened: see section 3.5. The settings are in the panel.
 6. **Pointer and keyboard on the map.** MapLibre's gesture recognisers were written for touch; scroll and right click may need
    extra recognisers (section 4).
 7. **Split View.** The Simulator and `xcodebuild` have no scripted way to put the app in Split View at 1/3, 1/2, 2/3; the checks

@@ -146,6 +146,9 @@ final class AppModel {
   }
   /// True while the planner shows a pushed screen (a journey's details): the edge swipe then goes back, not to the menu.
   var planPushed = false
+  /// True when the window is wide enough for the iPad layout (`WideLayout`): the rail and the left panel instead of the drawer,
+  /// the sheets and the full-screen modes. Set by `RootView` from the window's width; it never is on an iPhone.
+  var isWide = false
   /// A place the rider long-pressed on the map, waiting for them to say what to do with it.
   var droppedPin: PlanPoint?
   /// The journey drawn on the map, with the lines to draw.
@@ -530,6 +533,25 @@ final class AppModel {
 
   func closeDockedStop() { dockedStopID = nil }
 
+  // MARK: Keyboard commands
+
+  /// Opens a list over the map (search, routes, settings). In the wide layout the mode stays; on a phone the map comes first.
+  func open(_ list: ActiveSheet) {
+    if !isWide, mode != .map { mode = .map }
+    sheet = list
+  }
+
+  /// Escape: closes what is on top, one step at a time: the panel's sheet, then a mode, then the focus on a route.
+  func closeTop() {
+    if sheet != nil {
+      clearSelection()
+    } else if mode != .map {
+      mode = .map
+    } else if focus.isActive {
+      clearFocus()
+    }
+  }
+
   /// Lets go of the docked bus, and of the line it had put on the map.
   func closeDockedBus() {
     dockedVehicleID = nil
@@ -594,8 +616,11 @@ final class AppModel {
     let lines = journey.polylines(schedule: schedule)
     mapJourney = journey
     journeyLines = lines
-    mode = .map
-    sheet = .journey
+    // The wide layout shows the steps in the planner's panel, beside the map: nothing changes but the map.
+    if !isWide {
+      mode = .map
+      sheet = .journey
+    }
     fitRequest = FitRequest(coordinates: lines.flatMap(\.coordinates))
   }
 
@@ -645,7 +670,7 @@ final class AppModel {
     focusReturn = returnTarget()
     focus = .route(id, direction: direction)
     ensurePredictions()
-    if mode != .map { mode = .map }
+    if mode != .map, !isWide { mode = .map }
     if fit { fitToFocus() }
   }
 
@@ -673,6 +698,7 @@ final class AppModel {
 
   /// The list the map is being opened from, to come back to.
   private func returnTarget() -> FocusReturn? {
+    if isWide { return nil }  // the list stays beside the map: there is nothing to go back to
     if mode != .map { return .mode(mode) }
     if sheet == .routes { return .sheet(.routes) }
     return nil
@@ -737,7 +763,7 @@ final class AppModel {
     focusReturn = returnTarget()
     focus = next
     sheet = nil
-    mode = .map
+    if !isWide { mode = .map }
     fitToFocus()
   }
 
@@ -751,7 +777,7 @@ final class AppModel {
     focusReturn = returnTarget()
     focus = next
     sheet = nil
-    mode = .map
+    if !isWide { mode = .map }
     fitToFocus()
   }
 

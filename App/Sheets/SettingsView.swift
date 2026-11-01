@@ -201,7 +201,7 @@ struct SettingsView: View {
       .navigationTitle(L10n.string("Settings"))
       .navigationBarTitleDisplayMode(.inline)
       .navigationDestination(isPresented: $showingDataSettings) { DataSettingsView() }
-      .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Done") { dismiss() } } }
+      .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Done") { if model.isWide { model.sheet = nil } else { dismiss() } } } }
       .confirmationDialog(Text(L10n.string("Reset all settings?")), isPresented: $confirmReset, titleVisibility: .visible) {
         Button("Reset settings", role: .destructive) { model.settings.reset() }
       } message: {

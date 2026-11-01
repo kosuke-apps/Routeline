@@ -5354,6 +5354,39 @@
           }
         }
       }
+    },
+    "Put away": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "しまう"
+          }
+        }
+      }
+    },
+    "Go": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移動"
+          }
+        }
+      }
+    },
+    "Refresh buses now": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "バスを今すぐ更新"
+          }
+        }
+      }
     }
   }
 }

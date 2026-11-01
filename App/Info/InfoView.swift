@@ -19,7 +19,7 @@ struct InfoView: View {
       }
       .navigationTitle(L10n.string("Service info"))
       .navigationBarTitleDisplayMode(.inline)
-      .toolbar { ToolbarItem(placement: .topBarLeading) { MenuButton(plain: true) } }
+      .toolbar { ToolbarItem(placement: .topBarLeading) { if !model.isWide { MenuButton(plain: true) } } }
       .refreshable {
         model.refreshStatus()
         try? await Task.sleep(for: .milliseconds(400))
@@ -342,7 +342,7 @@ private struct FavoriteStopRow: View {
     let arrivals = upcoming()
     let text = model.timeText()
     Button {
-      model.mode = .map
+      if !model.isWide { model.mode = .map }
       model.selectStop(stop.id)
     } label: {
       VStack(alignment: .leading, spacing: 6) {

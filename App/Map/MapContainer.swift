@@ -20,6 +20,9 @@ struct MapContainer: UIViewRepresentable {
 
   /// Height of the sheet covering the lower part of the map, used to centre selections in what is still visible.
   var bottomInset: CGFloat
+  /// In the wide layout: the width at the left that the panel covers (0 when no panel is open), and the layout itself.
+  var leadingInset: CGFloat = 0
+  var wide = false
 
   func makeCoordinator() -> MapCoordinator { MapCoordinator() }
 
@@ -85,11 +88,13 @@ struct MapContainer: UIViewRepresentable {
     state.selectedVehicle = model.markedVehicleID
     state.isDark = colorScheme == .dark
     state.bottomInset = bottomInset
+    state.leadingInset = leadingInset
+    state.wide = wide
     state.locationAuthorized = model.location.isAuthorized
     state.alertRoutes = model.alertRouteIDs
     state.offRouteVehicles = model.offRouteVehicleIDs
     // The journey is drawn only while its steps are open: folded into the bar at the bottom, the map shows the network.
-    if let journey = model.mapJourney, model.sheet == .journey {
+    if let journey = model.mapJourney, model.sheet == .journey || model.isWide {
       state.journeyID = journey.id
       state.journeyTrips = Set(journey.rides.map(\.tripID))
       let routes = model.orderedRoutes
@@ -114,7 +119,7 @@ struct MapContainer: UIViewRepresentable {
       state.journeyPoints = points
     }
     context.coordinator.apply(state, camera: model.cameraRequest, fit: model.fitRequest)
-    context.coordinator.placeCredits(on: mapView)
+    context.coordinator.placeCredits(on: mapView, leading: wide ? leadingInset : 0)
   }
 
   static func dismantleUIView(_ mapView: MLNMapView, coordinator: MapCoordinator) {
@@ -130,6 +135,7 @@ final class MapCoordinator: NSObject, MLNMapViewDelegate, UIGestureRecognizerDel
 
   private weak var mapView: MLNMapView?
   private var creditsBottomInset: CGFloat = -1
+  private var creditsLeadingInset: CGFloat = 0
   private var layers: MapLayers?
   private var state = MapState()
   private var appliedOverlay: String?
@@ -218,16 +224,26 @@ final class MapCoordinator: NSObject, MLNMapViewDelegate, UIGestureRecognizerDel
   /// and a home bar they sit the same distance in from each side, level with each other, a little above the home bar's
   /// strip (their middles about 36 points above the bottom edge), so that the two look alike next to the curves of the
   /// corners; on one with a flat bottom edge they stay where MapLibre puts them.
-  func placeCredits(on mapView: MLNMapView) {
+  func placeCredits(on mapView: MLNMapView, leading: CGFloat = 0) {
     let bottom = mapView.window?.safeAreaInsets.bottom ?? 0
-    guard bottom > 0, mapView.bounds.width > 0, bottom != creditsBottomInset else { return }
+    // A phone with a flat bottom edge keeps MapLibre's own places (nothing is changed) unless a panel covers the left side.
+    guard bottom > 0 || leading > 0 || creditsLeadingInset > 0 else { return }
+    guard mapView.bounds.width > 0, bottom != creditsBottomInset || leading != creditsLeadingInset else { return }
     let logoSize = mapView.logoView.frame.size, infoSize = mapView.attributionButton.frame.size
     guard logoSize.height > 0, infoSize.height > 0 else { return }
     creditsBottomInset = bottom
-    let side: CGFloat = 24, middle: CGFloat = 36
-    // MapLibre measures the margins from the edge of the safe area.
-    mapView.logoViewMargins = CGPoint(x: side, y: middle - logoSize.height / 2 - bottom)
-    mapView.attributionButtonMargins = CGPoint(x: side, y: middle - infoSize.height / 2 - bottom)
+    creditsLeadingInset = leading
+    if bottom > 0 {
+      let side: CGFloat = 24, middle: CGFloat = 36
+      // MapLibre measures the margins from the edge of the safe area. In the wide layout the logo (at the left) moves to the
+      // right of the panel that covers the left of the map.
+      mapView.logoViewMargins = CGPoint(x: side + leading, y: middle - logoSize.height / 2 - bottom)
+      mapView.attributionButtonMargins = CGPoint(x: side, y: middle - infoSize.height / 2 - bottom)
+    } else if leading > 0 {
+      mapView.logoViewMargins = CGPoint(x: 8 + leading, y: 8)
+    } else {
+      mapView.logoViewMargins = CGPoint(x: 8, y: 8)
+    }
   }
 
   private func buildLayers(style: MLNStyle) {
@@ -281,9 +297,10 @@ final class MapCoordinator: NSObject, MLNMapViewDelegate, UIGestureRecognizerDel
     let zoom = max(mapView.zoomLevel, request.minimumZoom)
     // Shift the map's centre south so that the target appears in the middle of the part the sheet leaves free.
     let metersPerPoint = mapView.metersPerPoint(atLatitude: request.latitude) * pow(2, mapView.zoomLevel - zoom)
-    let shift = Double(state.bottomInset / 2) * metersPerPoint / 111_320
-    mapView.setCenter(
-      CLLocationCoordinate2D(latitude: request.latitude - shift, longitude: request.longitude), zoomLevel: zoom, animated: true)
+    let center = CameraMath.flyCenter(
+      latitude: request.latitude, longitude: request.longitude, metersPerPoint: metersPerPoint, bottomInset: state.bottomInset,
+      leadingInset: state.wide ? state.leadingInset : 0)
+    mapView.setCenter(CLLocationCoordinate2D(latitude: center.latitude, longitude: center.longitude), zoomLevel: zoom, animated: true)
   }
 
   /// Zooms to show all of `coordinates`, leaving room for the sheet at the bottom and the buttons at the top.
@@ -298,7 +315,7 @@ final class MapCoordinator: NSObject, MLNMapViewDelegate, UIGestureRecognizerDel
     }
     let bounds = MLNCoordinateBounds(
       sw: CLLocationCoordinate2D(latitude: minLat, longitude: minLon), ne: CLLocationCoordinate2D(latitude: maxLat, longitude: maxLon))
-    let padding = UIEdgeInsets(top: 130, left: 40, bottom: max(state.bottomInset, 320) + 30, right: 40)
+    let padding = CameraMath.fitPadding(bottomInset: state.bottomInset, leadingInset: state.leadingInset, wide: state.wide)
     mapView.setVisibleCoordinateBounds(bounds, edgePadding: padding, animated: true, completionHandler: nil)
   }
 

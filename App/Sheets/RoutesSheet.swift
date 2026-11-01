@@ -35,7 +35,7 @@ struct RoutesSheet: View {
             Button("Hide all routes") { model.settings.values.hiddenRoutes = Set(model.orderedRoutes.map(\.id)) }
           } label: { Label("More", systemImage: "ellipsis.circle") }
         }
-        ToolbarItem(placement: .topBarTrailing) { Button("Done") { dismiss() } }
+        ToolbarItem(placement: .topBarTrailing) { Button("Done") { if model.isWide { model.sheet = nil } else { dismiss() } } }
       }
     }
   }
