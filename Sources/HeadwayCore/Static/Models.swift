@@ -112,6 +112,17 @@ public struct ServiceDate: Sendable, Hashable, Comparable {
     return calendar.date(from: parts)!
   }
 
+  /// The instant GTFS measures this date's times from: noon minus twelve hours, which is what the specification says "time
+  /// after midnight" means. On an ordinary day that is midnight; on the day the clocks go back it is an hour *after* midnight
+  /// (the day has 25 hours and 00:00 in the specification is 01:00 on the wall), and on the day they go forward an hour before
+  /// it. Adding a stop's seconds to `midnight(in:)` instead puts every time of such a day an hour off.
+  public func timeOrigin(in timeZone: TimeZone) -> Date {
+    var calendar = Calendar(identifier: .gregorian)
+    calendar.timeZone = timeZone
+    let noon = DateComponents(year: value / 10_000, month: value / 100 % 100, day: value % 100, hour: 12)
+    return calendar.date(from: noon)!.addingTimeInterval(-12 * 3_600)
+  }
+
   public func adding(days: Int, in timeZone: TimeZone) -> ServiceDate {
     var calendar = Calendar(identifier: .gregorian)
     calendar.timeZone = timeZone

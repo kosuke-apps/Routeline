@@ -99,7 +99,7 @@ public enum ServiceStatusBuilder {
     let silent = schedule.scheduledTrips(at: now, inset: 120).compactMap { trip, date -> SilentTrip? in
       guard !reporting.contains(trip.id), let times = schedule.stopTimes[trip.id], let first = times.first, let last = times.last
       else { return nil }
-      let midnight = date.midnight(in: schedule.timeZone)
+      let midnight = date.timeOrigin(in: schedule.timeZone)
       return SilentTrip(
         tripID: trip.id, routeID: trip.routeID, headsign: trip.headsign, serviceDate: date,
         scheduledStart: midnight.addingTimeInterval(Double(first.departure)),

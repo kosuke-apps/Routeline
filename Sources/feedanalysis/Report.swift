@@ -103,7 +103,7 @@ struct Report {
         let candidates = [ServiceDate(time, in: schedule.timeZone), ServiceDate(time, in: schedule.timeZone).adding(days: -1, in: schedule.timeZone)]
         let nearest = candidates.compactMap { date -> (before: Int, after: Int)? in
           guard schedule.activeServiceIDs(on: date).contains(schedule.trips[v.tripID]?.serviceID ?? "") else { return nil }
-          let seconds = Int(time.timeIntervalSince(date.midnight(in: schedule.timeZone)))
+          let seconds = Int(time.timeIntervalSince(date.timeOrigin(in: schedule.timeZone)))
           return (first.departure - seconds, seconds - last.arrival)
         }
         if nearest.contains(where: { $0.before > 0 && $0.before <= 900 }) {

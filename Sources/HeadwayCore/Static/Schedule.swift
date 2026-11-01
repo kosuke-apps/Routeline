@@ -238,7 +238,7 @@ public struct Schedule: Sendable {
     let today = ServiceDate(moment, in: timeZone)
     var result: [(Trip, ServiceDate)] = []
     for date in [today, today.adding(days: -1, in: timeZone)] {
-      let seconds = Int(moment.timeIntervalSince(date.midnight(in: timeZone)))
+      let seconds = Int(moment.timeIntervalSince(date.timeOrigin(in: timeZone)))
       let active = activeServiceIDs(on: date)
       for trip in trips.values where active.contains(trip.serviceID) {
         guard let times = stopTimes[trip.id], let first = times.first, let last = times.last else { continue }
@@ -259,7 +259,7 @@ public struct Schedule: Sendable {
     var result: [ScheduledDeparture] = []
     var date = firstDate
     while date <= lastDate {
-      let midnight = date.midnight(in: timeZone)
+      let midnight = date.timeOrigin(in: timeZone)
       let active = activeServiceIDs(on: date)
       for visit in visits {
         let time = midnight.addingTimeInterval(TimeInterval(visit.departure))
@@ -286,7 +286,7 @@ public struct Schedule: Sendable {
     let today = ServiceDate(moment, in: timeZone)
     var best: (date: ServiceDate, distance: Int)?
     for date in [today, today.adding(days: -1, in: timeZone)] where activeServiceIDs(on: date).contains(trip.serviceID) {
-      let seconds = Int(moment.timeIntervalSince(date.midnight(in: timeZone)))
+      let seconds = Int(moment.timeIntervalSince(date.timeOrigin(in: timeZone)))
       let distance = seconds < first.departure ? first.departure - seconds : max(0, seconds - last.arrival)
       if best == nil || distance < best!.distance { best = (date, distance) }
     }
@@ -296,6 +296,6 @@ public struct Schedule: Sendable {
   /// The scheduled arrival instant of `trip` at `sequence`, given the service date the trip runs on.
   public func scheduledArrival(tripID: String, sequence: Int, on date: ServiceDate) -> Date? {
     guard let stop = stopTimes[tripID]?.first(where: { $0.sequence == sequence }) else { return nil }
-    return date.midnight(in: timeZone).addingTimeInterval(TimeInterval(stop.arrival))
+    return date.timeOrigin(in: timeZone).addingTimeInterval(TimeInterval(stop.arrival))
   }
 }

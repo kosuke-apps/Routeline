@@ -77,7 +77,7 @@ public final class ArrivalEstimator {
     guard track.count >= 2 else { return [] }
 
     // 2. Stops -> distance along the route, in order.
-    let midnight = serviceDate.midnight(in: schedule.timeZone)
+    let midnight = serviceDate.timeOrigin(in: schedule.timeZone)
     var observations: [ArrivalObservation] = []
     var stopSegment = 0
     var lastStopAlong = 0.0

@@ -234,7 +234,7 @@ public struct TripPlanner: Sendable {
     let lastDate = ServiceDate(end, in: schedule.timeZone)
     var date = firstDate
     while date <= lastDate {
-      let midnight = date.midnight(in: schedule.timeZone)
+      let midnight = date.timeOrigin(in: schedule.timeZone)
       let base = midnight.timeIntervalSince(start)
       let active = schedule.activeServiceIDs(on: date)
       for trip in schedule.trips.values where active.contains(trip.serviceID) {

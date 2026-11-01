@@ -37,7 +37,7 @@ extension Schedule {
 
     func consider(_ date: ServiceDate, isToday: Bool) {
       let active = activeServiceIDs(on: date)
-      let midnight = date.midnight(in: timeZone)
+      let midnight = date.timeOrigin(in: timeZone)
       for trip in candidates {
         guard active.contains(trip.serviceID), let times = stopTimes[trip.id], let first = times.first, let last = times.last
         else { continue }

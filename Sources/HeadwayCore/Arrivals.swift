@@ -141,7 +141,7 @@ extension Arrivals {
     serviceDate: ServiceDate? = nil
   ) -> [TripStopEta] {
     guard let times = schedule.stopTimes[tripID], let date = serviceDate ?? schedule.serviceDate(of: tripID, near: now) else { return [] }
-    let midnight = date.midnight(in: schedule.timeZone)
+    let midnight = date.timeOrigin(in: schedule.timeZone)
     var predictedBySequence: [Int: Date] = [:]
     var predictedByStop: [String: Date] = [:]
     for stop in prediction?.stops ?? [] where !stop.skipped {
