@@ -61,6 +61,9 @@ if ! xcodebuild -project Headway.xcodeproj -scheme Headway -configuration Releas
   -destination "id=$DEVICE" -derivedDataPath build/Device -allowProvisioningUpdates build > "$LOG" 2>&1; then
   echo "Build failed. Errors:"
   grep -E "error:" "$LOG" | sort -u | head -n 10
+  if grep -q "needs to be unlocked" "$LOG"; then
+    echo "The iPhone is locked. Unlock it, keep the screen on, and run this again."
+  fi
   echo "(full log: $LOG; the first build after adding an Apple ID sometimes fails while Xcode creates the signing profile, so try once more)"
   exit 1
 fi
