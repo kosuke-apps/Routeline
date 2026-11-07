@@ -74,6 +74,7 @@ struct RootView: View {
     }
     .animation(.snappy(duration: 0.22), value: panelShown)
     .background(GeometryReader { Color.clear.preference(key: WindowWidthKey.self, value: $0.size.width) })
+    .background { KeyboardShortcuts() }
     .onPreferenceChange(WindowWidthKey.self) { width in
       windowWidth = width
       model.isWide = WideLayout.isWide(width: width, horizontalSizeClass: sizeClass)

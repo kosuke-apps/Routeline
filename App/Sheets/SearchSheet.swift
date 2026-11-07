@@ -37,14 +37,11 @@ struct SearchSheet: View {
       }
       .navigationTitle(L10n.string("Find a stop"))
       .navigationBarTitleDisplayMode(.inline)
-      .searchable(
-        text: $query, isPresented: $searching, placement: .navigationBarDrawer(displayMode: .always),
-        prompt: Text(L10n.string("Stop name or number"))
-      )
+      .appSearchable(text: $query, prompt: L10n.string("Stop name or number"), isPresented: $searching, autoFocus: model.isWide)
       .textInputAutocapitalization(.never)
       .onAppear { if model.isWide { searching = true } }
       .onChange(of: query) { _, _ in highlighted = 0 }
-      .onSubmit(of: .search) {
+      .onSubmit(of: [.search, .text]) {
         guard model.isWide else { return }
         let results = search(query)
         if !results.isEmpty { model.selectStop(results[min(highlighted, results.count - 1)].id) }

@@ -68,9 +68,7 @@ struct WideRail: View {
 
   private func item(_ mode: AppMode, title: LocalizedStringKey, symbol: String, badge: Int = 0) -> some View {
     Button {
-      model.mode = mode
-      // A list that was open over the map (search, routes) gives way to the mode that was chosen.
-      if model.sheet == .search || model.sheet == .routes || model.sheet == .settings { model.sheet = nil }
+      model.switchMode(mode)
     } label: {
       icon(symbol, selected: model.mode == mode)
         .overlay(alignment: .topTrailing) {

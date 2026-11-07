@@ -541,6 +541,12 @@ final class AppModel {
     sheet = list
   }
 
+  /// Chooses a mode (the rail, ⌘1/2/3). A list that was open over the map (search, routes, settings) gives way to it.
+  func switchMode(_ newMode: AppMode) {
+    mode = newMode
+    if sheet == .search || sheet == .routes || sheet == .settings { sheet = nil }
+  }
+
   /// Escape: closes what is on top, one step at a time: the panel's sheet, then a mode, then the focus on a route.
   func closeTop() {
     if sheet != nil {
