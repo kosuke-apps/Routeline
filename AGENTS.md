@@ -272,7 +272,7 @@ The author's general workspace rules (outside this repository) apply too; this f
   (app; use the simulator's UDID when two are booted) and `cd collector && npm test` (runs the Worker in Cloudflare's
   runtime locally). The counts are in the README's Quality checks; update them there when tests are added.
 - Strings: `tools/add_strings.py` adds or updates Japanese translations in the catalog from JSON on stdin.
-- iPhone: `tools/run_on_device.sh` builds a Release build (the timetable loads about ten times faster than in Debug).
+- iPhone or iPad: `tools/run_on_device.sh [--list | name or id]` builds a Release build (the timetable loads about ten times faster than in Debug); with several devices paired it stops and asks, so name the one.
 - Collector: `collector/README.md` (setup, limits, taking it down); `python3 tools/pull_feeds.py [--status]` fetches what it
   recorded into `data/feeds/`.
 - Before building the app: `tools/fetch_basemap.sh` and `tools/fetch_timetable.sh` (both outputs are bundled by

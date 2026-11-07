@@ -1,4 +1,4 @@
-# Running Headway on a real iPhone
+# Running Headway on a real iPhone or iPad
 
 ## Why signing is different from the simulator and from a Mac app
 
@@ -38,6 +38,13 @@ Program (USD 99 a year), so it is not used for now. The same applies to the App 
    ```bash
    tools/run_on_device.sh
    ```
+   With one device paired it uses that one. With an iPhone and an iPad both paired it stops and lists them, so that the
+   build never goes to the wrong one; name the one you mean (the whole name, a part of it that fits only one, or its id):
+   ```bash
+   tools/run_on_device.sh --list
+   tools/run_on_device.sh "iPad"
+   ```
+   An iPad needs the same steps as the iPhone (Developer Mode, Trust, the 7 days of a free Apple ID).
 5. First launch only: iPhone > Settings > General > VPN & Device Management > your Apple ID > Trust.
 
 If Xcode says the bundle identifier is not available, uncomment `PRODUCT_BUNDLE_IDENTIFIER` in `Config/Local.xcconfig`
