@@ -123,6 +123,14 @@ public struct ServiceDate: Sendable, Hashable, Comparable {
     return calendar.date(from: noon)!.addingTimeInterval(-12 * 3_600)
   }
 
+  /// The newest service date that has begun at `moment`. Normally the date on the wall; in the hour before midnight on the day
+  /// before the clocks go forward it is the next one, because that date starts at 23:00 (`timeOrigin(in:)`).
+  public static func latest(at moment: Date, in timeZone: TimeZone) -> ServiceDate {
+    let today = ServiceDate(moment, in: timeZone)
+    let tomorrow = today.adding(days: 1, in: timeZone)
+    return tomorrow.timeOrigin(in: timeZone) <= moment ? tomorrow : today
+  }
+
   public func adding(days: Int, in timeZone: TimeZone) -> ServiceDate {
     var calendar = Calendar(identifier: .gregorian)
     calendar.timeZone = timeZone

@@ -231,7 +231,7 @@ public struct TripPlanner: Sendable {
     var trips: [TripInstance] = []
     let end = start.addingTimeInterval(options.searchWindow)
     let firstDate = ServiceDate(start, in: schedule.timeZone).adding(days: -1, in: schedule.timeZone)
-    let lastDate = ServiceDate(end, in: schedule.timeZone)
+    let lastDate = ServiceDate.latest(at: end, in: schedule.timeZone)
     var date = firstDate
     while date <= lastDate {
       let midnight = date.timeOrigin(in: schedule.timeZone)

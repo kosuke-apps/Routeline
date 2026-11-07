@@ -235,7 +235,7 @@ public struct Schedule: Sendable {
   /// `inset` shrinks the span at both ends (in seconds), which keeps trips that are about to start or have just
   /// ended out of the result.
   public func scheduledTrips(at moment: Date, inset: Int = 0) -> [(trip: Trip, serviceDate: ServiceDate)] {
-    let today = ServiceDate(moment, in: timeZone)
+    let today = ServiceDate.latest(at: moment, in: timeZone)
     var result: [(Trip, ServiceDate)] = []
     for date in [today, today.adding(days: -1, in: timeZone)] {
       let seconds = Int(moment.timeIntervalSince(date.timeOrigin(in: timeZone)))
@@ -255,7 +255,7 @@ public struct Schedule: Sendable {
   public func scheduledDepartures(from stopID: String, from start: Date, until end: Date) -> [ScheduledDeparture] {
     guard let visits = visitsByStop[stopID] else { return [] }
     let firstDate = ServiceDate(start, in: timeZone).adding(days: -1, in: timeZone)
-    let lastDate = ServiceDate(end, in: timeZone)
+    let lastDate = ServiceDate.latest(at: end, in: timeZone)
     var result: [ScheduledDeparture] = []
     var date = firstDate
     while date <= lastDate {
@@ -283,7 +283,7 @@ public struct Schedule: Sendable {
     guard let trip = trips[tripID], let times = stopTimes[tripID], let first = times.first, let last = times.last else {
       return nil
     }
-    let today = ServiceDate(moment, in: timeZone)
+    let today = ServiceDate.latest(at: moment, in: timeZone)
     var best: (date: ServiceDate, distance: Int)?
     for date in [today, today.adding(days: -1, in: timeZone)] where activeServiceIDs(on: date).contains(trip.serviceID) {
       let seconds = Int(moment.timeIntervalSince(date.timeOrigin(in: timeZone)))
