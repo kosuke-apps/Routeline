@@ -37,24 +37,16 @@ struct SearchSheet: View {
       }
       .navigationTitle(L10n.string("Find a stop"))
       .navigationBarTitleDisplayMode(.inline)
-      .appSearchable(text: $query, prompt: L10n.string("Stop name or number"), isPresented: $searching, autoFocus: model.isWide)
+      .appSearchable(
+        text: $query, prompt: L10n.string("Stop name or number"), isPresented: $searching, autoFocus: model.isWide,
+        onMove: model.isWide ? { delta in highlighted = max(0, min(highlighted + delta, search(query).count - 1)) } : nil)
       .textInputAutocapitalization(.never)
       .onAppear { if model.isWide { searching = true } }
       .onChange(of: query) { _, _ in highlighted = 0 }
       .onSubmit(of: [.search, .text]) {
         guard model.isWide else { return }
         let results = search(query)
-        if !results.isEmpty { model.selectStop(results[min(highlighted, results.count - 1)].id) }
-      }
-      .onKeyPress(.downArrow) {
-        guard model.isWide else { return .ignored }
-        highlighted = min(highlighted + 1, max(0, search(query).count - 1))
-        return .handled
-      }
-      .onKeyPress(.upArrow) {
-        guard model.isWide else { return .ignored }
-        highlighted = max(0, highlighted - 1)
-        return .handled
+        if !results.isEmpty { choose(results[min(highlighted, results.count - 1)].id) }
       }
       .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Done") { if model.isWide { model.sheet = nil } else { dismiss() } } } }
     }
@@ -62,7 +54,7 @@ struct SearchSheet: View {
 
   private func row(_ stop: Stop) -> some View {
     Button {
-      model.selectStop(stop.id)
+      choose(stop.id)
     } label: {
       HStack(spacing: 10) {
         VStack(alignment: .leading, spacing: 3) {
@@ -82,6 +74,12 @@ struct SearchSheet: View {
       .contentShape(Rectangle())
     }
     .buttonStyle(.plain)
+  }
+
+  /// Opens the stop and puts the keyboard away: in the wide layout the panel changes in place, so nothing else would close it.
+  private func choose(_ id: String) {
+    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    model.selectStop(id)
   }
 
   private func search(_ query: String) -> [Stop] {

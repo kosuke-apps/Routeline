@@ -30,16 +30,27 @@ struct StopSheet: View {
       HStack(alignment: .top, spacing: 12) {
         VStack(alignment: .leading, spacing: 3) {
           Text(stop.name).font(.title3.weight(.semibold)).lineLimit(2)
-          HStack(spacing: 6) {
-            // The same name is often used for the stops on both sides of a street: say which side this is.
-            if let side = Compass.bound(stop.facing) {
-              Label(side, systemImage: Compass.symbol(stop.facing)).foregroundStyle(.primary).fontWeight(.semibold)
-              Text("·")
-            }
+          // The same name is often used for the stops on both sides of a street: say which side this is. In a narrow panel
+          // the words go on two lines rather than breaking "Eastbound" in the middle.
+          let side = Compass.bound(stop.facing)
+          let details = HStack(spacing: 6) {
             if !stop.code.isEmpty { Text("Stop \(stop.code)") }
             if let distance = distance(to: stop) { Text("· \(distance)") }
           }
-          .font(.footnote).foregroundStyle(.secondary)
+          ViewThatFits(in: .horizontal) {
+            HStack(spacing: 6) {
+              if let side {
+                sideLabel(side, stop)
+                Text("·")
+              }
+              details
+            }
+            VStack(alignment: .leading, spacing: 2) {
+              if let side { sideLabel(side, stop) }
+              details
+            }
+          }
+          .font(.footnote).foregroundStyle(.secondary).lineLimit(1)
         }
         Spacer(minLength: 8)
         Button {
@@ -70,6 +81,10 @@ struct StopSheet: View {
       }
     }
     .padding(.horizontal, 16).padding(.top, 14).padding(.bottom, 10)
+  }
+
+  private func sideLabel(_ side: String, _ stop: Stop) -> some View {
+    Label(side, systemImage: Compass.symbol(stop.facing)).foregroundStyle(.primary).fontWeight(.semibold).fixedSize(horizontal: true, vertical: false)
   }
 
   private func distance(to stop: Stop) -> String? {

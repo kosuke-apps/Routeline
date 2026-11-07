@@ -200,7 +200,7 @@ The author's general workspace rules (outside this repository) apply too; this f
     focus chip has no "back" (`returnTarget`). `MapState.leadingInset` and `wide` replace `bottomInset` in the camera (`CameraMath`:
     the phone's arithmetic is unchanged and tested to be), and the map's logo moves right of the panel. Do not use `.inspector`
     (a split view controller around the map: MapLibre removes an observer it never added and the app aborts) and do not move
-    `MapContainer` in the view tree. Keyboard: `AppCommand` (⌘1/2/3, ⌘F, ⌘R, ⌘L, ⇧⌘R, ⌘, and Escape = `closeTop`) feeds both the `.commands` "Go" menu and invisible buttons in the view tree (`KeyboardShortcuts`), because a Mac that runs the iPad app shows no custom menu; never use `.searchable` directly, use `appSearchable` (UIKit aborts the app on a Mac as soon as a search field is active);
+    `MapContainer` in the view tree. Keyboard: `AppCommand` (⌘1/2/3, ⌘F, ⌘R, ⌘L, ⇧⌘R, ⌘, and Escape = `closeTop`) feeds both the `.commands` "Go" menu and invisible buttons in the view tree (`KeyboardShortcuts`), because a Mac that runs the iPad app shows no custom menu; never use `.searchable` directly, use `appSearchable` (UIKit aborts the app on a Mac as soon as a search field is active; the wide layout uses its plain field too, because a system search field does not pass the arrow keys on);
     in the search panel the arrow keys move the highlighted result and Return opens it. Design and checks: `docs/ipad-design.md`.
   - Language: Settings > Behavior > Language (system default / English / 日本語, `Preferences.language`). `LanguageState.shared`
     (`App/Support/Language.swift`, observable) holds the chosen language, its `Locale` (the language with the phone's

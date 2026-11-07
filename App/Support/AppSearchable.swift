@@ -8,8 +8,12 @@ extension View {
   /// - Parameters:
   ///   - isPresented: whether the search field is active, for the iPhone and iPad path (nil leaves it to the system).
   ///   - autoFocus: put the cursor in the field at once (the wide layout, where a keyboard is likely to be there).
-  func appSearchable(text: Binding<String>, prompt: String, isPresented: Binding<Bool>? = nil, autoFocus: Bool = false) -> some View {
-    modifier(AppSearchable(text: text, prompt: prompt, isPresented: isPresented, autoFocus: autoFocus))
+  ///   - onMove: the plain field also gets the up and down arrow keys (-1, +1), which a system search field does not pass on
+  ///     to its parents; giving it makes the plain field the one to use on an iPad too.
+  func appSearchable(
+    text: Binding<String>, prompt: String, isPresented: Binding<Bool>? = nil, autoFocus: Bool = false, onMove: ((Int) -> Void)? = nil
+  ) -> some View {
+    modifier(AppSearchable(text: text, prompt: prompt, isPresented: isPresented, autoFocus: autoFocus, onMove: onMove))
   }
 }
 
@@ -18,10 +22,11 @@ private struct AppSearchable: ViewModifier {
   let prompt: String
   let isPresented: Binding<Bool>?
   let autoFocus: Bool
+  let onMove: ((Int) -> Void)?
 
   @ViewBuilder func body(content: Content) -> some View {
-    if ProcessInfo.processInfo.isiOSAppOnMac {
-      content.safeAreaInset(edge: .top, spacing: 0) { SearchField(text: $text, prompt: prompt, autoFocus: autoFocus) }
+    if ProcessInfo.processInfo.isiOSAppOnMac || onMove != nil {
+      content.safeAreaInset(edge: .top, spacing: 0) { SearchField(text: $text, prompt: prompt, autoFocus: autoFocus, onMove: onMove) }
     } else if let isPresented {
       content.searchable(text: $text, isPresented: isPresented, placement: .navigationBarDrawer(displayMode: .always), prompt: Text(prompt))
     } else {
@@ -35,6 +40,7 @@ private struct SearchField: View {
   @Binding var text: String
   let prompt: String
   let autoFocus: Bool
+  let onMove: ((Int) -> Void)?
   @FocusState private var focused: Bool
 
   var body: some View {
@@ -45,6 +51,8 @@ private struct SearchField: View {
         .focused($focused)
         .submitLabel(.search)
         .autocorrectionDisabled()
+        .onKeyPress(.downArrow) { move(1) }
+        .onKeyPress(.upArrow) { move(-1) }
       if !text.isEmpty {
         Button { text = "" } label: { Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary) }
           .buttonStyle(.plain)
@@ -57,5 +65,11 @@ private struct SearchField: View {
     .padding(.horizontal, 16)
     .padding(.bottom, 6)
     .onAppear { if autoFocus { focused = true } }
+  }
+
+  private func move(_ delta: Int) -> KeyPress.Result {
+    guard let onMove else { return .ignored }
+    onMove(delta)
+    return .handled
   }
 }
