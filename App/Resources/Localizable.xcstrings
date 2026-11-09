@@ -2167,17 +2167,6 @@
         }
       }
     },
-    "No connection · positions %lld s old": {
-      "extractionState": "manual",
-      "localizations": {
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "接続なし · 位置は%lld秒前"
-          }
-        }
-      }
-    },
     "Delayed · positions %lld s old": {
       "extractionState": "manual",
       "localizations": {
@@ -5406,6 +5395,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "設定…"
+          }
+        }
+      }
+    },
+    "Offline": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オフライン"
+          }
+        }
+      }
+    },
+    "Offline · positions %lld s old": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オフライン · 位置は%lld秒前"
+          }
+        }
+      }
+    },
+    "City feed not answering · positions %lld s old": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "市のデータが応答なし · 位置は%lld秒前"
+          }
+        }
+      }
+    },
+    "You are offline. The map shows the last positions received; the app keeps trying and updates as soon as the connection is back.": {
+      "extractionState": "manual",
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オフラインです．地図には最後に受信した位置が表示されています．接続が戻りしだい，自動で更新します．"
           }
         }
       }

@@ -187,11 +187,13 @@ private struct StatusPill: View {
     Button { model.liveSummaryOpen.toggle() } label: {
       TimelineView(.periodic(from: .now, by: 1)) { context in
         let age = model.positionAge(at: context.date)
-        let late = model.liveFailing || (age ?? 0) > 90
+        let offline = model.isOffline
+        let late = offline || model.liveFailing || (age ?? 0) > 90
         HStack(spacing: 8) {
-          Circle().fill(model.lastLiveUpdate == nil ? Color.gray : (late ? Color.orange : Color.green)).frame(width: 8, height: 8)
+          Circle().fill(model.lastLiveUpdate == nil && !offline ? Color.gray : (late ? Color.orange : Color.green)).frame(width: 8, height: 8)
           // One line whatever the numbers are: the text shrinks a little rather than wrapping.
-          Text(text(age: age, late: late)).font(.footnote.weight(.medium)).monospacedDigit().lineLimit(1).minimumScaleFactor(0.75)
+          Text(LiveStatusText.pill(age: age, buses: model.vehicles.count, offline: offline, failing: model.liveFailing, late: late))
+            .font(.footnote.weight(.medium)).monospacedDigit().lineLimit(1).minimumScaleFactor(0.75)
         }
         .foregroundStyle(.primary)
         .padding(.horizontal, 12)
@@ -206,16 +208,6 @@ private struct StatusPill: View {
       LiveSummary().presentationCompactAdaptation(.popover)
     }
     .onChange(of: model.liveSummaryOpen) { _, open in if open { model.ensurePredictions() } }
-  }
-
-  private func text(age: TimeInterval?, late: Bool) -> String {
-    guard let age else { return L10n.string("Connecting…") }
-    let seconds = Int(age.rounded())
-    if model.liveFailing {
-      return L10n.string("No connection · positions \(seconds) s old")
-    }
-    if late { return L10n.string("Delayed · positions \(seconds) s old") }
-    return L10n.string("Live · \(model.vehicles.count) buses · positions \(seconds) s old")
   }
 }
 

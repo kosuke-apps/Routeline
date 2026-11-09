@@ -204,7 +204,7 @@ To run on your own iPhone, see Installing above and `docs/run-on-iphone.md`.
 ```bash
 swift test                                                       # data layer and the tool (170 tests)
 xcodebuild test -project Headway.xcodeproj -scheme Headway \
-  -destination 'platform=iOS Simulator,name=iPhone 18 Pro' CODE_SIGNING_ALLOWED=NO   # app tests (107)
+  -destination 'platform=iOS Simulator,name=iPhone 18 Pro' CODE_SIGNING_ALLOWED=NO   # app tests (109)
 (cd collector && npm test)                                       # collector, in Cloudflare's runtime (9 tests)
 ```
 

@@ -24,7 +24,11 @@ struct LiveSummary: View {
           tile(fleet.early, "Early", .blue)
           tile(fleet.total - fleet.measured, "No prediction", .gray)
         }
-        if let age, age > 60, let asked = model.lastLiveUpdate, context.date.timeIntervalSince(asked) > 25, !model.liveFailing {
+        if model.isOffline {
+          // No connection: nothing to do with the city's feed. The positions on the map are the last ones that arrived.
+          Label("You are offline. The map shows the last positions received; the app keeps trying and updates as soon as the connection is back.", systemImage: "wifi.slash")
+            .font(.footnote).foregroundStyle(.orange).fixedSize(horizontal: false, vertical: true)
+        } else if let age, age > 60, let asked = model.lastLiveUpdate, context.date.timeIntervalSince(asked) > 25, !model.liveFailing {
           // The phone itself has had no answer for a while (a request that hangs, a connection that is not getting through).
           Label("The app has had no answer from the city for \(Int(context.date.timeIntervalSince(asked).rounded())) s. It keeps trying.", systemImage: "wifi.exclamationmark")
             .font(.footnote).foregroundStyle(.orange).fixedSize(horizontal: false, vertical: true)

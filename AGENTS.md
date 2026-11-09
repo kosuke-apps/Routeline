@@ -311,7 +311,7 @@ The author's general workspace rules (outside this repository) apply too; this f
   the app: up to 0.6.2 the vehicle poll waited for the trip-update download. Also fixed: the poll stopped while the app was
   merely "inactive", sheet and mode changes cancelled the request under way, an older feed could replace a newer one, and a
   watchdog now restarts a poll that has not been answered for 30 s. See `docs/data-sources.md`, "When positions are a minute
-  or two old". The live card says whether the city's feed or the phone's connection is behind.
+  or two old". The live card says whether the city's feed or the phone's connection is behind. The status line says "Offline" when the system reports no network or a request fails because the phone cannot reach one (`AppModel.isOffline`, `NetworkStatus.isConnectivityError`; a time-out is not counted, the server may be the slow one), and "City feed not answering" when the city's server fails while the phone is online (`LiveStatusText`).
 - Live latency (measured on 2026-10-03, see `docs/data-sources.md`): a bus reports every 30 s, the feed is rebuilt every
   30 s, positions are about 25 s old on arrival. The app times its requests from the server's `Date` header, dead-reckons
   buses along their route at their last speed (up to 50 s), and veils buses silent for over 75 s (45 s beyond the fleet's median age when the whole feed is behind,

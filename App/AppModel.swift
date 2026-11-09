@@ -122,6 +122,11 @@ final class AppModel {
   private(set) var feedChangedAt: Date?
   /// True when the most recent poll failed.
   private(set) var liveFailing = false
+  /// True when the system reports no network (Airplane Mode, no signal) or the last poll failed because the phone could not
+  /// reach the network at all. The status line says "Offline" then; a city server that answers badly is `liveFailing` only.
+  var isOffline: Bool { networkOffline || liveOffline }
+  private(set) var networkOffline = false
+  private(set) var liveOffline = false
 
   var sheet: ActiveSheet? {
     didSet { if sheet != oldValue { selectionChanged() } }
@@ -389,6 +394,9 @@ final class AppModel {
   func start() async {
     guard !started else { return }
     started = true
+    NetworkStatus.shared.onPathChange { [weak self] online in
+      Task { @MainActor in self?.networkOffline = !online }
+    }
     NetworkStatus.shared.start()
     watchdogSince = Date()
     restartPolling(immediately: true)
@@ -1169,6 +1177,7 @@ final class AppModel {
         }
         lastLiveUpdate = Date()
         liveFailing = false
+        liveOffline = false
         let fixed = settings.values.updateInterval
         if fixed > 0 {
           delay = Double(fixed)
@@ -1190,6 +1199,7 @@ final class AppModel {
       } catch {
         if Task.isCancelled { return }  // a restart cancels the request; that is not a failure
         liveFailing = true
+        liveOffline = NetworkStatus.isConnectivityError(error)
       }
       refreshArrivals()
       refreshStatus()
