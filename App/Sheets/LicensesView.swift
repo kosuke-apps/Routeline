@@ -58,7 +58,7 @@ struct LicensesView: View {
         }
         VStack(alignment: .leading, spacing: 2) {
           Text("City of Madison, Metro Transit")
-          Text("Timetables and live positions: Data provided under license granted by City of Madison, WI, Metro Transit. Headway is independent of the City and Metro Transit.")
+          Text("Timetables and live positions: Data provided under license granted by City of Madison, WI, Metro Transit. Routeline is independent of the City and Metro Transit.")
             .font(.footnote).foregroundStyle(.secondary)
         }
       } header: {
@@ -80,7 +80,7 @@ struct LicensesView: View {
       } header: {
         Text("Software and fonts")
       } footer: {
-        Text("Headway itself is under the MIT licence, Copyright (c) 2026 Kosuke Satake.")
+        Text("Routeline itself is under the MIT licence, Copyright (c) 2026 Kosuke Satake.")
       }
     }
     .navigationTitle(L10n.string("Licences"))

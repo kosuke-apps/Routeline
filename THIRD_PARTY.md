@@ -1,6 +1,6 @@
 # Third-party material
 
-Headway's own code is under the MIT licence (`LICENSE`, Copyright (c) 2026 Kosuke Satake). The material below belongs to
+Routeline's own code is under the MIT licence (`LICENSE`, Copyright (c) 2026 Kosuke Satake). The material below belongs to
 others and keeps its own terms. Everything that ships in the app is also listed, with its full licence text, in
 Settings > Licences (the texts are `App/Resources/Licenses/*.txt`; `LicenseTests` checks that each one is present).
 

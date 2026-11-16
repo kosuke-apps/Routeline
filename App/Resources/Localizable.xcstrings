@@ -4556,24 +4556,24 @@
         }
       }
     },
-    "Timetables and live positions: Data provided under license granted by City of Madison, WI, Metro Transit. Headway is independent of the City and Metro Transit.": {
+    "Timetables and live positions: Data provided under license granted by City of Madison, WI, Metro Transit. Routeline is independent of the City and Metro Transit.": {
       "extractionState": "manual",
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "時刻表とバスの位置: Data provided under license granted by City of Madison, WI, Metro Transit.(マディソン市 Metro Transit から許諾を受けて提供されたデータ)．Headway は市や Metro Transit とは無関係の個人のアプリです．"
+            "value": "時刻表とバスの位置: Data provided under license granted by City of Madison, WI, Metro Transit.(マディソン市 Metro Transit から許諾を受けて提供されたデータ)．Routeline は市や Metro Transit とは無関係の個人のアプリです．"
           }
         }
       }
     },
-    "Headway itself is under the MIT licence, Copyright (c) 2026 Kosuke Satake.": {
+    "Routeline itself is under the MIT licence, Copyright (c) 2026 Kosuke Satake.": {
       "extractionState": "manual",
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Headway 自体は MIT ライセンスです．Copyright (c) 2026 Kosuke Satake．"
+            "value": "Routeline 自体は MIT ライセンスです．Copyright (c) 2026 Kosuke Satake．"
           }
         }
       }

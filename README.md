@@ -210,7 +210,7 @@ xcodebuild test -project Routeline.xcodeproj -scheme Routeline \
 
 ## Licence
 
-Headway is released under the MIT licence: Copyright (c) 2026 Kosuke Satake (see [LICENSE](LICENSE)). The libraries, fonts
+Routeline is released under the MIT licence: Copyright (c) 2026 Kosuke Satake (see [LICENSE](LICENSE)). The libraries, fonts
 and map styles it contains, and the data it uses, have their own terms: see [THIRD_PARTY.md](THIRD_PARTY.md), and
 Settings > Licences inside the app. The city's data terms are summarised in `docs/data-sources.md`.
 
