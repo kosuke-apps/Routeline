@@ -1,5 +1,5 @@
 import Foundation
-import HeadwayCore
+import RoutelineCore
 
 // Usage:
 //   feedanalysis schedule <mmt_gtfs.zip>

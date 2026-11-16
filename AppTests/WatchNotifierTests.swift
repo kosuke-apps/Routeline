@@ -1,8 +1,8 @@
 import Foundation
-import HeadwayCore
+import RoutelineCore
 import Testing
 
-@testable import Headway
+@testable import Routeline
 
 @Suite struct WatchNotifierTests {
   private func event(_ kind: WatchKind, seconds: Int = 0, buses: Int = 0, headline: String = "", detail: String = "") -> WatchEvent {

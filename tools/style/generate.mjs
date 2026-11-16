@@ -8,7 +8,7 @@ const flavors = { light: "white", dark: "dark" };
 for (const [name, flavorName] of Object.entries(flavors)) {
   const style = {
     version: 8,
-    name: `Headway basemap (${name})`,
+    name: `Routeline basemap (${name})`,
     glyphs: "__GLYPHS__/{fontstack}/{range}.pbf",
     sources: {
       protomaps: {

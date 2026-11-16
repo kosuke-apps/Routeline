@@ -1,5 +1,5 @@
 import Foundation
-import HeadwayCore
+import RoutelineCore
 
 /// Compares recorded GTFS-Realtime snapshots with the static schedule.
 ///

@@ -1,5 +1,5 @@
 import Charts
-import HeadwayCore
+import RoutelineCore
 import SwiftUI
 
 /// What a punctuality graph is about: a route, and a stop when the graph was for one.
@@ -63,7 +63,7 @@ struct PunctualityDetail: View {
 
       if slices.isEmpty {
         Section {
-          Text("Not enough history for this yet. Headway keeps recording, so it fills in as days go by.")
+          Text("Not enough history for this yet. Routeline keeps recording, so it fills in as days go by.")
             .foregroundStyle(.secondary)
         }
       } else {

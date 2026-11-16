@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 
-@testable import HeadwayCore
+@testable import RoutelineCore
 
 /// GTFS counts a service day's time from noon minus twelve hours, so on the day the clocks go back 14:00 in the timetable is
 /// 14:00 on the wall, and the day's "midnight" is 01:00 on the wall. Adding the seconds to the wall's midnight put every time of
@@ -43,7 +43,7 @@ import Testing
 
   /// A one-trip timetable between two stops that runs on Sundays (and on Saturdays when `saturday` is set), all of 2026 and 2027.
   private func schedule(first: String, second: String, saturday: Bool = false) throws -> Schedule {
-    let dir = FileManager.default.temporaryDirectory.appendingPathComponent("headway-dst-\(UUID().uuidString)")
+    let dir = FileManager.default.temporaryDirectory.appendingPathComponent("routeline-dst-\(UUID().uuidString)")
     try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
     let files: [String: String] = [
       "agency.txt": "agency_id,agency_name,agency_timezone\n1,Test,America/Chicago\n",

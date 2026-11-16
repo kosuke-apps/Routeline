@@ -1,13 +1,13 @@
 import BackgroundTasks
 import Foundation
-import HeadwayCore
+import RoutelineCore
 import SwiftUI
 import UserNotifications
 
 /// Tells the rider when a route they watch is late, early or has an alert.
 ///
 /// These are local notifications: no server and no paid developer account are involved, so they are only as timely as
-/// the app's own checks. Headway checks every time the live feed updates while it is open, and now and then in the
+/// the app's own checks. Routeline checks every time the live feed updates while it is open, and now and then in the
 /// background when iOS allows it (see `WatchBackground`).
 @MainActor
 final class WatchNotifier {
@@ -49,7 +49,7 @@ final class WatchNotifier {
       content.title = text.title
       content.body = text.body
       content.sound = .default
-      content.threadIdentifier = "headway.watch.\(event.routeID)"
+      content.threadIdentifier = "routeline.watch.\(event.routeID)"
       if event.kind != .alert {
         let minutes = max(1, Int((Double(event.seconds) / 60).rounded())) * (event.kind == .late ? 1 : -1)
         if let url = NotificationBadge.file(label: style.name + event.patternNumber, fillHex: style.fillHex, minutes: minutes),
@@ -58,7 +58,7 @@ final class WatchNotifier {
           content.attachments = [attachment]
         }
       }
-      try? await center.add(UNNotificationRequest(identifier: "headway.watch.\(event.id)", content: content, trigger: nil))
+      try? await center.add(UNNotificationRequest(identifier: "routeline.watch.\(event.id)", content: content, trigger: nil))
     }
   }
 
@@ -142,7 +142,7 @@ private struct NotificationsDeniedAlert: ViewModifier {
       }
       Button("Cancel", role: .cancel) {}
     } message: {
-      Text("Allow notifications for Headway in the iPhone's Settings to get these messages.")
+      Text("Allow notifications for Routeline in the iPhone's Settings to get these messages.")
     }
   }
 }

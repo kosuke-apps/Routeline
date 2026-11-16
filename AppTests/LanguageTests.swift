@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 
-@testable import Headway
+@testable import Routeline
 
 @Suite struct LanguageTests {
   /// The app bundle that holds the translation folders (the tests run inside the app).

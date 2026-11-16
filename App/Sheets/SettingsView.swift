@@ -1,4 +1,4 @@
-import HeadwayCore
+import RoutelineCore
 import SwiftUI
 
 struct SettingsView: View {
@@ -146,7 +146,7 @@ struct SettingsView: View {
         } header: {
           Text("Behavior")
         } footer: {
-          Text("System default follows iOS Settings > Headway > Language. Dates, numbers and distances follow your phone's region. The location permission message and the app's name come from iOS and keep its language. The choice stays on this phone.")
+          Text("System default follows iOS Settings > Routeline > Language. Dates, numbers and distances follow your phone's region. The location permission message and the app's name come from iOS and keep its language. The choice stays on this phone.")
         }
 
         notificationsSection
@@ -250,7 +250,7 @@ struct SettingsView: View {
     } header: {
       Text("Notifications")
     } footer: {
-      Text("Headway looks at your routes whenever its live data updates while it is open, and now and then in the background when iOS allows it. There is no server behind this, so a notification can come late, or not at all, if iOS does not wake the app. Late means more than \(settings.values.watchLateMinutes) minutes behind the timetable, early more than \(settings.values.watchEarlyMinutes) minutes ahead. Each destination and direction of a route (D2 to Epic Campus, D1 to the hospital) is judged and told on its own.")
+      Text("Routeline looks at your routes whenever its live data updates while it is open, and now and then in the background when iOS allows it. There is no server behind this, so a notification can come late, or not at all, if iOS does not wake the app. Late means more than \(settings.values.watchLateMinutes) minutes behind the timetable, early more than \(settings.values.watchEarlyMinutes) minutes ahead. Each destination and direction of a route (D2 to Epic Campus, D1 to the hospital) is judged and told on its own.")
     }
   }
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build Headway (an optimised Release build: the timetable loads several times faster than in a Debug build) and
+# Build Routeline (an optimised Release build: the timetable loads several times faster than in a Debug build) and
 # install it on a connected iPhone or iPad.
 #
 #   tools/run_on_device.sh --list        # the paired devices, nothing is built
@@ -94,7 +94,7 @@ echo "Device: $DEVICE"
 
 LOG="build/device-build.log"
 mkdir -p build
-if ! xcodebuild -project Headway.xcodeproj -scheme Headway -configuration Release \
+if ! xcodebuild -project Routeline.xcodeproj -scheme Routeline -configuration Release \
   -destination "id=$DEVICE" -derivedDataPath build/Device -allowProvisioningUpdates build > "$LOG" 2>&1; then
   echo "Build failed. Errors:"
   grep -E "error:" "$LOG" | sort -u | head -n 10
@@ -104,11 +104,11 @@ if ! xcodebuild -project Headway.xcodeproj -scheme Headway -configuration Releas
   echo "(full log: $LOG; the first build after adding an Apple ID sometimes fails while Xcode creates the signing profile, so try once more)"
   exit 1
 fi
-APP="build/Device/Build/Products/Release-iphoneos/Headway.app"
+APP="build/Device/Build/Products/Release-iphoneos/Routeline.app"
 xcrun devicectl device install app --device "$DEVICE" "$APP"
 if ! xcrun devicectl device process launch --device "$DEVICE" dev.kosuke.headway; then
   echo
   echo "Installed, but it could not start. On the first install the $KIND must trust you as a developer:"
   echo "  Settings > General > VPN & Device Management > your Apple ID > Trust."
-  echo "Then open Headway from the Home screen."
+  echo "Then open Routeline from the Home screen."
 fi

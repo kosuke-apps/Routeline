@@ -1,4 +1,4 @@
-import HeadwayCore
+import RoutelineCore
 import SwiftUI
 
 private enum PickTarget: Identifiable, Equatable {
@@ -600,7 +600,7 @@ struct JourneyDetailView: View {
         Label("Reminder set · tap to cancel", systemImage: "bell.fill").foregroundStyle(.orange)
       }
     case .denied:
-      Label("Notifications are turned off for Headway. You can turn them on in Settings.", systemImage: "bell.slash").foregroundStyle(.secondary).font(.footnote)
+      Label("Notifications are turned off for Routeline. You can turn them on in Settings.", systemImage: "bell.slash").foregroundStyle(.secondary).font(.footnote)
     case .tooLate:
       Label("It is too late for a reminder: this journey starts very soon.", systemImage: "bell.slash").foregroundStyle(.secondary).font(.footnote)
     case .unknown, .off:

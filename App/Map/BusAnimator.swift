@@ -1,5 +1,5 @@
 import CoreLocation
-import HeadwayCore
+import RoutelineCore
 import QuartzCore
 
 /// One bus as drawn on the map.

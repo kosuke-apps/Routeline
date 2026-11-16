@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 
-@testable import Headway
+@testable import Routeline
 
 @Suite struct PreferencesTests {
   private func decode(_ json: String) throws -> Preferences {
@@ -82,12 +82,12 @@ import Testing
 
 @MainActor @Suite struct AppSettingsTests {
   private func makeSettings() -> AppSettings {
-    let suite = "headway-tests-\(UUID().uuidString)"
+    let suite = "routeline-tests-\(UUID().uuidString)"
     return AppSettings(defaults: UserDefaults(suiteName: suite)!)
   }
 
   @Test func persistsChanges() {
-    let suite = "headway-tests-\(UUID().uuidString)"
+    let suite = "routeline-tests-\(UUID().uuidString)"
     let defaults = UserDefaults(suiteName: suite)!
     let first = AppSettings(defaults: defaults)
     first.values.routePalette = .quiet

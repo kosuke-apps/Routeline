@@ -1,6 +1,6 @@
 # Data sources: Madison Metro Transit
 
-Checked on 2026-10-03 by fetching the feeds and decoding them with `HeadwayCore`.
+Checked on 2026-10-03 by fetching the feeds and decoding them with `RoutelineCore`.
 
 | Data | URL | Notes |
 |---|---|---|
@@ -21,7 +21,7 @@ Read on 2026-10-03 and compared again with the file in the feed on 2026-10-10; t
 - Crediting the city is optional. The wording if used: "Data provided under license granted by City of Madison, WI,
   Metro Transit."
 - "Data" includes anything derived from what the licensee receives, and the city keeps all rights in the Data (except
-  those of third parties). Headway's punctuality statistics are derived from the feeds, so they are published as the
+  those of third parties). Routeline's punctuality statistics are derived from the feeds, so they are published as the
   statistics of the app and not as a dataset; the recordings themselves (`data/`) are never committed or redistributed.
 - The data is provided as is, with no warranty of accuracy or availability. The agreement is governed by Wisconsin law.
 - The licensee indemnifies the city against claims arising from its use of the data or products derived from it.

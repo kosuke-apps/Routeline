@@ -1,4 +1,4 @@
-import HeadwayCore
+import RoutelineCore
 import MapKit
 import SwiftUI
 
@@ -45,7 +45,7 @@ struct PlacePicker: View {
           Label("My location", systemImage: "location.fill")
         }
         if model.location.isDenied {
-          Text("Location is turned off for Headway. You can turn it on in Settings.").font(.footnote).foregroundStyle(.secondary)
+          Text("Location is turned off for Routeline. You can turn it on in Settings.").font(.footnote).foregroundStyle(.secondary)
         }
       }
     }

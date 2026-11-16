@@ -15,7 +15,7 @@ need no entry.
 | [MapLibre Native](https://github.com/maplibre/maplibre-native) (map rendering) | Swift package dependency, via maplibre-gl-native-distribution 6.31.0 | BSD 2-Clause |
 | [SwiftProtobuf](https://github.com/apple/swift-protobuf) 1.38.1 (reads the live feeds) | Swift package dependency | Apache License 2.0 |
 | [ZIPFoundation](https://github.com/weichsel/ZIPFoundation) 0.9.20 (opens the timetable archive) | Swift package dependency | MIT |
-| `gtfs-realtime.proto` and the Swift code generated from it | `proto/`, `Sources/HeadwayCore/Generated/` | Apache License 2.0, Copyright 2015 The GTFS Specifications Authors |
+| `gtfs-realtime.proto` and the Swift code generated from it | `proto/`, `Sources/RoutelineCore/Generated/` | Apache License 2.0, Copyright 2015 The GTFS Specifications Authors |
 | Noto Sans glyphs (map label fonts, as `.pbf` files) | `App/Resources/glyphs/`, fetched by `tools/fetch_basemap.sh` from [protomaps/basemaps-assets](https://github.com/protomaps/basemaps-assets) | SIL Open Font License 1.1; the text is `App/Resources/glyphs/OFL.txt` and is bundled with the fonts |
 | Map styles `basemap-light.json` and `basemap-dark.json`, generated from [@protomaps/basemaps](https://github.com/protomaps/basemaps) | `App/Resources/` | BSD 3-Clause (code); the visual design is CC0, some icons MIT (Mapzen); the text is `App/Resources/Licenses/protomaps-basemaps.txt` |
 | Map data | `data/maps/madison.pmtiles` (not in the repository; built by `tools/fetch_basemap.sh`) | © OpenStreetMap contributors, Open Database Licence 1.0; tiles from a Protomaps build |

@@ -71,7 +71,7 @@ struct MenuDrawer: View {
           .frame(width: 44, height: 44)
           .background(LinearGradient(colors: [Color(red: 0.18, green: 0.5, blue: 0.93), Color(red: 0.04, green: 0.18, blue: 0.51)], startPoint: .topLeading, endPoint: .bottomTrailing), in: RoundedRectangle(cornerRadius: 11, style: .continuous))
         VStack(alignment: .leading, spacing: 2) {
-          Text("Headway").font(.title3.weight(.bold))
+          Text("Routeline").font(.title3.weight(.bold))
           Text("Madison Metro Transit").font(.footnote).foregroundStyle(.secondary)
         }
       }

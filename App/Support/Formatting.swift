@@ -1,5 +1,5 @@
 import Foundation
-import HeadwayCore
+import RoutelineCore
 
 /// Turns times and delays into the short strings shown to riders.
 struct TimeText {

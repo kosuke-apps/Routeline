@@ -1,5 +1,5 @@
 {
-  "name": "headway-style",
+  "name": "routeline-style",
   "private": true,
   "type": "module",
   "description": "Generates App/Resources/basemap-style.json from the Protomaps basemap themes.",

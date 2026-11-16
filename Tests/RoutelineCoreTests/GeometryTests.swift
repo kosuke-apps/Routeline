@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 
-@testable import HeadwayCore
+@testable import RoutelineCore
 
 @Suite struct GeometryTests {
   @Test func haversineMatchesKnownDistance() {

@@ -1,6 +1,6 @@
 import CoreLocation
 import Foundation
-import HeadwayCore
+import RoutelineCore
 import Observation
 
 /// Where a trip starts or ends, as chosen by the rider.

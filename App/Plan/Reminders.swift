@@ -1,5 +1,5 @@
 import Foundation
-import HeadwayCore
+import RoutelineCore
 import UserNotifications
 
 /// Shows reminders even while the app is open.
@@ -24,7 +24,7 @@ enum Reminders {
     case tooLate
   }
 
-  static func identifier(for journey: Journey) -> String { "headway.reminder.\(journey.id)" }
+  static func identifier(for journey: Journey) -> String { "routeline.reminder.\(journey.id)" }
 
   static func isScheduled(_ journey: Journey) async -> Bool {
     await UNUserNotificationCenter.current().pendingNotificationRequests().contains { $0.identifier == identifier(for: journey) }

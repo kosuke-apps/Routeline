@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 
-@testable import HeadwayCore
+@testable import RoutelineCore
 
 @Suite struct CSVTests {
   private func rows(_ text: String) -> (header: [String: Int], rows: [[String]]) {

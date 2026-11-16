@@ -1,4 +1,4 @@
-# Running Headway on a real iPhone or iPad
+# Running Routeline on a real iPhone or iPad
 
 ## Why signing is different from the simulator and from a Mac app
 
@@ -20,7 +20,7 @@ What to check on your Mac: the login keychain should have an Apple Development c
 `Config/Local.xcconfig`, which is not committed (the file is listed in `.gitignore`).
 
 macOS apps can be signed with a self-signed certificate (which keeps privacy permissions across rebuilds), but iOS does
-not accept self-signed certificates, so Headway uses the Apple Development certificate.
+not accept self-signed certificates, so Routeline uses the Apple Development certificate.
 
 TestFlight is Apple's beta-testing service: you upload a build to App Store Connect, testers install it through the
 TestFlight app from an invitation or a public link, and each build expires after 90 days. It needs the paid Developer
@@ -33,7 +33,7 @@ Program (USD 99 a year), so it is not used for now. The same applies to the App 
    and tap Trust.
 3. Put your team id in `Config/Local.xcconfig` (copy `Config/Local.xcconfig.example`; the file is not committed) so that
    `xcodegen generate` does not lose it.
-4. Build and install, either in Xcode (`xcodegen generate && open Headway.xcodeproj`, choose the iPhone, Run) or from
+4. Build and install, either in Xcode (`xcodegen generate && open Routeline.xcodeproj`, choose the iPhone, Run) or from
    the terminal:
    ```bash
    tools/run_on_device.sh

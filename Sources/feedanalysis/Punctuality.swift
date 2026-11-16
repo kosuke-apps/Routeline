@@ -1,5 +1,5 @@
 import Foundation
-import HeadwayCore
+import RoutelineCore
 
 /// Turns recorded bus positions into arrival observations, stores them, and summarises them for the app.
 struct PunctualityBuilder {

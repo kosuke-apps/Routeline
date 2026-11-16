@@ -1,5 +1,5 @@
 import Foundation
-import HeadwayCore
+import RoutelineCore
 
 /// Are the live predictions better than the timetable? Compares each predicted arrival with the arrival observed
 /// afterwards, grouped by how far ahead the prediction was made.

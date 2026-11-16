@@ -16,7 +16,7 @@ enum BaseStyle {
     else { return plainStyle(dark: dark) }
     json = json.replacingOccurrences(of: "__PMTILES__", with: tiles.absoluteString)
     json = json.replacingOccurrences(of: "__GLYPHS__", with: resources.appendingPathComponent("glyphs").absoluteString)
-    return write(json, name: dark ? "headway-dark-style.json" : "headway-light-style.json")
+    return write(json, name: dark ? "routeline-dark-style.json" : "routeline-light-style.json")
   }
 
   /// A background-only style: what the map shows if the basemap files are missing from the bundle.
@@ -24,14 +24,14 @@ enum BaseStyle {
     let json = """
       {
         "version": 8,
-        "name": "Headway plain",
+        "name": "Routeline plain",
         "sources": {},
         "layers": [
           { "id": "background", "type": "background", "paint": { "background-color": "\(dark ? "#1C1C1E" : "#EEEBE4")" } }
         ]
       }
       """
-    return write(json, name: dark ? "headway-plain-dark.json" : "headway-plain-light.json")
+    return write(json, name: dark ? "routeline-plain-dark.json" : "routeline-plain-light.json")
   }
 
   private static func write(_ json: String, name: String) -> URL {

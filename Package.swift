@@ -2,10 +2,10 @@
 import PackageDescription
 
 let package = Package(
-  name: "Headway",
+  name: "Routeline",
   platforms: [.iOS(.v17), .macOS(.v14)],
   products: [
-    .library(name: "HeadwayCore", targets: ["HeadwayCore"]),
+    .library(name: "RoutelineCore", targets: ["RoutelineCore"]),
     .executable(name: "feedanalysis", targets: ["feedanalysis"]),
   ],
   dependencies: [
@@ -14,7 +14,7 @@ let package = Package(
   ],
   targets: [
     .target(
-      name: "HeadwayCore",
+      name: "RoutelineCore",
       dependencies: [
         .product(name: "SwiftProtobuf", package: "swift-protobuf"),
         .product(name: "ZIPFoundation", package: "ZIPFoundation"),
@@ -23,17 +23,17 @@ let package = Package(
     ),
     .executableTarget(
       name: "feedanalysis",
-      dependencies: ["HeadwayCore"],
+      dependencies: ["RoutelineCore"],
       swiftSettings: [.swiftLanguageMode(.v5)]
     ),
     .testTarget(
       name: "FeedAnalysisTests",
-      dependencies: ["feedanalysis", "HeadwayCore"],
+      dependencies: ["feedanalysis", "RoutelineCore"],
       swiftSettings: [.swiftLanguageMode(.v5)]
     ),
     .testTarget(
-      name: "HeadwayCoreTests",
-      dependencies: ["HeadwayCore"],
+      name: "RoutelineCoreTests",
+      dependencies: ["RoutelineCore"],
       swiftSettings: [.swiftLanguageMode(.v5)]
     ),
   ]

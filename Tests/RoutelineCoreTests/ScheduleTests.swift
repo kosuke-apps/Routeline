@@ -1,11 +1,11 @@
 import Foundation
 import Testing
 
-@testable import HeadwayCore
+@testable import RoutelineCore
 
 /// A tiny feed written to a temporary folder, so the tests do not depend on downloaded data.
 func makeFeed() throws -> URL {
-  let dir = FileManager.default.temporaryDirectory.appendingPathComponent("headway-feed-\(UUID().uuidString)")
+  let dir = FileManager.default.temporaryDirectory.appendingPathComponent("routeline-feed-\(UUID().uuidString)")
   try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
   let files: [String: String] = [
     "agency.txt": "agency_id,agency_name,agency_timezone\n1,Test,America/Chicago\n",

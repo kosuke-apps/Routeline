@@ -1,8 +1,8 @@
-import HeadwayCore
+import RoutelineCore
 import SwiftUI
 import Testing
 
-@testable import Headway
+@testable import Routeline
 
 @Suite struct WideLayoutTests {
   @Test func aPhoneAndANarrowWindowGetThePhoneLayout() {

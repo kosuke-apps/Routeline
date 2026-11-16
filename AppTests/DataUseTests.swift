@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 
-@testable import Headway
+@testable import Routeline
 
 @Suite struct DataUseTests {
   // MARK: How often predictions are fetched

@@ -1,6 +1,6 @@
 import Testing
 
-@testable import HeadwayCore
+@testable import RoutelineCore
 
 struct StopCodesTests {
   @Test func findsCodesWrittenInDifferentWays() {

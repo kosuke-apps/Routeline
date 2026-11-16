@@ -1,4 +1,4 @@
-import HeadwayCore
+import RoutelineCore
 import SwiftUI
 
 /// How a delay (seconds from the timetable) is coloured in the sheets of a bus and of a trip.

@@ -1,5 +1,5 @@
 #!/usr/bin/env swift
-// Draws the Headway app icon: a route with stops and a live bus whose position pulses.
+// Draws the Routeline app icon: a route with stops and a live bus whose position pulses.
 //
 //   swift tools/make_icon.swift App/Resources/Assets.xcassets/AppIcon.appiconset
 //

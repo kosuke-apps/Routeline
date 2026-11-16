@@ -1,4 +1,4 @@
-import HeadwayCore
+import RoutelineCore
 import SwiftUI
 
 /// Settings > Live buses > the icon next to "Save mobile data": how much data the app uses, and how to use less. Bus
@@ -70,7 +70,7 @@ struct DataSettingsView: View {
     } header: {
       Text("Data used since \(usage.since.formatted(date: .abbreviated, time: .shortened))")
     } footer: {
-      Text("What Headway downloaded, counted by the app: the data itself, without the headers of each request, so iOS Settings (Cellular) shows a little more.")
+      Text("What Routeline downloaded, counted by the app: the data itself, without the headers of each request, so iOS Settings (Cellular) shows a little more.")
     }
   }
 

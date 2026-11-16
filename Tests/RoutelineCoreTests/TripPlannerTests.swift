@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 
-@testable import HeadwayCore
+@testable import RoutelineCore
 
 /// A small network written to a temporary folder.
 ///
@@ -11,7 +11,7 @@ import Testing
 ///
 /// Each route also runs an hour later. R2 has an extra trip leaving C 30 s after R1 arrives (too tight to use).
 func makePlannerFeed(stopAccess: [String: Int] = [:], tripAccess: [String: Int] = [:]) throws -> Schedule {
-  let dir = FileManager.default.temporaryDirectory.appendingPathComponent("headway-plan-\(UUID().uuidString)")
+  let dir = FileManager.default.temporaryDirectory.appendingPathComponent("routeline-plan-\(UUID().uuidString)")
   try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
   var stopTimes = "trip_id,arrival_time,departure_time,stop_id,stop_sequence\n"
   func trip(_ id: String, _ stops: [(String, String)]) {

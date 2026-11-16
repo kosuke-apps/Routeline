@@ -1,4 +1,4 @@
-import HeadwayCore
+import RoutelineCore
 import SwiftUI
 
 /// What the rider put away, waiting at the bottom right of the map: the stop, the bus and the journey they were looking

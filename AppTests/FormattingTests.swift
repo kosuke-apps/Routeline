@@ -1,8 +1,8 @@
-import HeadwayCore
+import RoutelineCore
 import Testing
 import UIKit
 
-@testable import Headway
+@testable import Routeline
 
 @Suite struct FormattingTests {
   @Test func headsignsAreTidied() {

@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 
-@testable import Headway
+@testable import Routeline
 
 @Suite struct LicenseTests {
   /// The app bundle that holds the licence files (the tests run inside the app).

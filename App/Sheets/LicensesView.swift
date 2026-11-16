@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// One piece of other people's work that Headway ships or draws on, and where its licence text is.
+/// One piece of other people's work that Routeline ships or draws on, and where its licence text is.
 struct LicenseEntry: Identifiable, Hashable {
   let id: String
   let name: String

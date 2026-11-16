@@ -1,8 +1,8 @@
-import HeadwayCore
+import RoutelineCore
 import MapLibre
 import UIKit
 
-/// The layers Headway draws on top of the basemap, and the code that restyles them.
+/// The layers Routeline draws on top of the basemap, and the code that restyles them.
 ///
 /// Routes and stops sit under the basemap's text labels (street and place names) but above its fills and roads.
 /// Stop names and buses are drawn on top of everything so that they are never hidden.

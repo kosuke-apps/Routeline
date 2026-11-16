@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="docs/icon.png" width="128" alt="Headway app icon">
+  <img src="docs/icon.png" width="128" alt="Routeline app icon">
 </p>
 
-<h1 align="center">Headway</h1>
+<h1 align="center">Routeline</h1>
 
 <p align="center"><b>A fast, live bus map for Madison, WI (Metro Transit): see where the buses are and when the next one really comes.</b></p>
 
@@ -37,11 +37,11 @@
 
 ## Install
 
-Headway is not in the App Store. Each release is an unsigned `.ipa`, on purpose: sign it with your own Apple ID through a
+Routeline is not in the App Store. Each release is an unsigned `.ipa`, on purpose: sign it with your own Apple ID through a
 sideloading tool such as AltStore or Sideloadly.
 
-1. Download `Headway-x.y.z-unsigned.ipa` and its `.sha256` from the [latest release](https://github.com/kosuke-apps/Headway/releases/latest).
-2. Check the file: `shasum -a 256 -c Headway-x.y.z-unsigned.ipa.sha256`.
+1. Download `Routeline-x.y.z-unsigned.ipa` and its `.sha256` from the [latest release](https://github.com/kosuke-apps/Headway/releases/latest).
+2. Check the file: `shasum -a 256 -c Routeline-x.y.z-unsigned.ipa.sha256`.
 3. Open the `.ipa` in the sideloading tool and install it on your iPhone (iOS 17 or later).
 
 To build it yourself, see [Installing](#installing) below. Details on what the tools can and cannot do with a free Apple ID
@@ -49,13 +49,13 @@ are there too.
 
 ## Privacy
 
-Headway has no account, no analytics and no server of its own. Your location, settings and saved places stay on the phone.
+Routeline has no account, no analytics and no server of its own. Your location, settings and saved places stay on the phone.
 The only network requests are to the City of Madison's public bus feeds and, when you search for a place by name, to Apple
 Maps. See [PRIVACY.md](PRIVACY.md).
 
 ---
 
-Headway is an independent project. It is not made, endorsed or supported by the City of Madison or Metro Transit; it uses
+Routeline is an independent project. It is not made, endorsed or supported by the City of Madison or Metro Transit; it uses
 the data the city publishes (see Data below), and bus times can differ from what the buses do.
 
 ## Features
@@ -118,7 +118,7 @@ the data the city publishes (see Data below), and bus times can differ from what
   choose in Settings); an alert's **Show on map** link does the same and rings the stops its text names; the delay rows
   of Service info show the late or early buses on the map. Hide routes you never use.
 - **Notifications.** Watch routes (swipe a route) and be told when one is late, early or has an alert. Local
-  notifications only: Headway checks while it is open and, when iOS allows, in the background, so they are best effort.
+  notifications only: Routeline checks while it is open and, when iOS allows, in the background, so they are best effort.
 - **Search** by stop name or sign number; favourites, recents and nearby stops.
 - **Language.** English or Japanese, chosen in Settings > Behavior > Language (or "System default", which follows iOS). The change
   applies at once, without restarting. Dates, numbers and distances keep following the phone's region, and the map's labels
@@ -143,7 +143,7 @@ Maps. See [PRIVACY.md](PRIVACY.md).
 
 ## Installing
 
-Headway is not on the App Store. You put it on your own iPhone (iOS 17 or later), signed with your own Apple ID,
+Routeline is not on the App Store. You put it on your own iPhone (iOS 17 or later), signed with your own Apple ID,
 because Apple only runs signed apps. There are two ways.
 
 **Build it yourself (the main way, and how the author installs it).** You need a Mac with Xcode and the tools under
@@ -159,8 +159,8 @@ tools/run_on_device.sh                                                          
 a free Apple ID the app has to be installed again every 7 days.
 
 **Or take a release build (no build needed, but a second tool is).** Each
-[release](https://github.com/kosuke-apps/Headway/releases) has an unsigned `Headway-<version>-unsigned.ipa` and its
-checksum. Check the download with `shasum -a 256 -c Headway-<version>-unsigned.ipa.sha256`, then install the `.ipa` with a
+[release](https://github.com/kosuke-apps/Headway/releases) has an unsigned `Routeline-<version>-unsigned.ipa` and its
+checksum. Check the download with `shasum -a 256 -c Routeline-<version>-unsigned.ipa.sha256`, then install the `.ipa` with a
 sideloading tool that signs with your own Apple ID, such as [AltStore](https://altstore.io) or
 [Sideloadly](https://sideloadly.io). The file is deliberately unsigned, so it carries no signature of mine. With a free
 Apple ID, such tools are widely reported to install an app that stops opening after 7 days (it has to be signed again) and
@@ -177,8 +177,8 @@ and Node (for the map style). With Homebrew: `brew install xcodegen pmtiles node
 tools/fetch_basemap.sh      # map tiles (18 MB) and label glyphs
 tools/fetch_timetable.sh    # timetable bundled for the first launch (7 MB)
 tools/build_punctuality.sh  # punctuality statistics from recordings (an empty table if there are none)
-xcodegen generate           # creates Headway.xcodeproj
-open Headway.xcodeproj      # run on a simulator or your iPhone
+xcodegen generate           # creates Routeline.xcodeproj
+open Routeline.xcodeproj      # run on a simulator or your iPhone
 ```
 
 To run on your own iPhone, see Installing above and `docs/run-on-iphone.md`.
@@ -192,7 +192,7 @@ To run on your own iPhone, see Installing above and `docs/run-on-iphone.md`.
 
 ## Architecture
 
-- `Sources/HeadwayCore`: GTFS and GTFS-Realtime parsing, arrivals logic. No UI; tested with `swift test`.
+- `Sources/RoutelineCore`: GTFS and GTFS-Realtime parsing, arrivals logic. No UI; tested with `swift test`.
 - `App/`: SwiftUI app with MapLibre Native. See `AGENTS.md` for the file-by-file map.
 - `collector/`: a Cloudflare Worker (free plan) that records the city's feeds around the clock; `tools/pull_feeds.py`
   brings the recordings to the Mac. See `collector/README.md`.
@@ -203,7 +203,7 @@ To run on your own iPhone, see Installing above and `docs/run-on-iphone.md`.
 
 ```bash
 swift test                                                       # data layer and the tool (170 tests)
-xcodebuild test -project Headway.xcodeproj -scheme Headway \
+xcodebuild test -project Routeline.xcodeproj -scheme Routeline \
   -destination 'platform=iOS Simulator,name=iPhone 18 Pro' CODE_SIGNING_ALLOWED=NO   # app tests (109)
 (cd collector && npm test)                                       # collector, in Cloudflare's runtime (9 tests)
 ```

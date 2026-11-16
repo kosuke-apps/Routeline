@@ -1,4 +1,4 @@
-import HeadwayCore
+import RoutelineCore
 import SwiftUI
 
 /// The journey on the map, as a bottom sheet with its steps.

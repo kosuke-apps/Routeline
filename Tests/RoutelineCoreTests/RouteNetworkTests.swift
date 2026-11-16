@@ -1,12 +1,12 @@
 import Foundation
 import Testing
 
-@testable import HeadwayCore
+@testable import RoutelineCore
 
 /// Route X runs east (direction 1) from A to B on one street and west (direction 0) from B to A on another street via
 /// C, with two destinations westbound ("To Alpha" most trips, "To Airport" fewer).
 private func makeNetworkSchedule() throws -> Schedule {
-  let dir = FileManager.default.temporaryDirectory.appendingPathComponent("headway-net-\(UUID().uuidString)")
+  let dir = FileManager.default.temporaryDirectory.appendingPathComponent("routeline-net-\(UUID().uuidString)")
   try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
   let files: [String: String] = [
     "agency.txt": "agency_id,agency_name,agency_timezone\n1,Test,America/Chicago\n",

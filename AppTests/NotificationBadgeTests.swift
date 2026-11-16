@@ -1,7 +1,7 @@
 import Testing
 import UIKit
 
-@testable import Headway
+@testable import Routeline
 
 @Suite struct NotificationBadgeTests {
   /// The colour of the pixel at (x, y) of the image, in 0...255.

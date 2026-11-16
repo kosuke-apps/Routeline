@@ -1,7 +1,12 @@
-# Headway
+# Routeline
 
 An iPhone app that shows Madison, WI buses live on an offline map, with every route, stop and timetable at a glance.
 The author's general workspace rules (outside this repository) apply too; this file adds what is specific to this project.
+
+Formerly named Headway (renamed 2026-11-16). The old name stays on purpose in the bundle
+identifiers (`dev.kosuke.headway`, `.watch`, `.tests`, and the log subsystem and queue labels built on them), the launchd jobs
+`dev.kosuke.headway.*`, the collector (`headway-collector`, `HEADWAY_COLLECTOR_*`, the scripts' User-Agents), the repository's
+address until the repository is renamed, and the licence sentences until the licence is decided. Anywhere else it is a miss.
 
 ## Product
 
@@ -24,7 +29,7 @@ The author's general workspace rules (outside this repository) apply too; this f
   so the app owns the whole file. Any download needs the user's approval (file, source, size, destination).
 - Live vs scheduled: the UI must show clearly which times are live and which come only from the timetable.
 - Layout: the root `Package.swift` holds the data layer and a tool; `App/` is the iOS app on top of it, generated
-  into `Headway.xcodeproj` by XcodeGen from `project.yml` (the project file is not committed).
+  into `Routeline.xcodeproj` by XcodeGen from `project.yml` (the project file is not committed).
   - `App/AppModel.swift`: observable app state. Loads the timetable (cache in Application Support, else the bundled
     seed, else a download; refreshes at most daily with a conditional request (ETag / Last-Modified, so an unchanged
     timetable costs a few hundred bytes) and swaps only when the feed version changes), polls vehicles (interval from
@@ -40,7 +45,7 @@ The author's general workspace rules (outside this repository) apply too; this f
     every route from it at once while the timetable parses behind it (Debug builds parse in about 3.5 s, Release in about
     0.35 s on a Mac), so the map is never blank. `MapState.overlay` is what is drawn; `schedule` is only used to move buses
     between reports.
-  - Lanes: `Sources/HeadwayCore/RouteBundling.swift` (`RouteBundler.overview`) draws the network view. Each route's shapes
+  - Lanes: `Sources/RoutelineCore/RouteBundling.swift` (`RouteBundler.overview`) draws the network view. Each route's shapes
     are merged into one line (directions and variants within 30 m; one-way stretches farther apart stay separate), spikes
     to stops are removed, and the lines are laid onto a shared skeleton: a line within 18 m of skeleton already there and
     parallel to it follows that skeleton exactly, so all routes on a street share one centre line (the feed draws each
@@ -148,14 +153,14 @@ The author's general workspace rules (outside this repository) apply too; this f
     bus that stops reporting is dropped.
   - Stops: `cardinal_direction` in stops.txt gives the way each stop's buses go; the stop sheet, search, planner steps,
     the timetable and an arrow beside each stop on the map show it (`Compass`, `AppModel.stopSide`).
-  - `Sources/HeadwayCore/ServiceOutlook.swift` (today's first/last trip and the next trip of a route and direction),
+  - `Sources/RoutelineCore/ServiceOutlook.swift` (today's first/last trip and the next trip of a route and direction),
     `App/Support/RouteStatusText.swift` (the wording), `Planning/MultiStop.swift` (a trip through up to three stops with
     stay times; each part is planned from the end of the previous one plus the stay, and backwards for "arrive by").
   - Focus: `App/Map/MapFocus.swift`. A focus limits the map to a route (one direction or both), an alert's routes with its
     stops ringed (`StopCodes.find` reads "Stop 7253" out of the alert text, because alerts carry no stop ids) or the late
     and early buses of the delay rows. `Preferences.focusStyle` hides the rest or fades it. Arrows (`route-arrows`,
     `journey-arrows`) show the way buses run; a journey on the map hides everything but itself and the buses of its trips.
-  - Notifications: `Sources/HeadwayCore/Watch.swift` (`WatchEvaluator`, `WatchLedger`: late and early are judged per route,
+  - Notifications: `Sources/RoutelineCore/Watch.swift` (`WatchEvaluator`, `WatchLedger`: late and early are judged per route,
     destination and way (`BusDelay.headsign` / `directionName`), so a late D2 and an early D1 are two messages that name
     their destination, not "D is late" and "D is early"; a whole route (`watchedRoutes`) or single destinations
     (`watchedLines`, `WatchLine`) are watched; late and early after `watchLateMinutes` (3, 5, 10, 15) and `watchEarlyMinutes`
@@ -218,28 +223,28 @@ The author's general workspace rules (outside this repository) apply too; this f
     0.8 MB). `tools/style/generate.mjs` (Node, `@protomaps/basemaps`; flavors `white` and `dark`, points of interest removed)
     writes both style JSON files; rerun it after changing a flavor. The style has no remote URLs, so the map needs no network. Tiles are bundled into the
     app by `project.yml`, so run `tools/fetch_basemap.sh` before building. Attribution: (c) OpenStreetMap contributors.
-  - `Sources/HeadwayCore/Static/`: `CSV.swift` (byte-level CSV scanner), `Models.swift` (Route, Stop, Trip, StopTime,
+  - `Sources/RoutelineCore/Static/`: `CSV.swift` (byte-level CSV scanner), `Models.swift` (Route, Stop, Trip, StopTime,
     ServiceDate), `Schedule.swift` (in-memory static GTFS from a zip or folder; service calendar; trips in progress).
-  - `Sources/HeadwayCore/Planning/`: `TripPlanner.swift` (round-based connection scan: for each number of buses the
+  - `Sources/RoutelineCore/Planning/`: `TripPlanner.swift` (round-based connection scan: for each number of buses the
     earliest arrival, with walking access and footpath transfers, live delays applied to buses that report; a second
     scan finds the buses after the first journey's), `Journey.swift` (journey, legs, polylines along the route shape).
-  - `Sources/HeadwayCore/RouteNetwork.swift` (routes per stop, stops and destinations per route and direction),
+  - `Sources/RoutelineCore/RouteNetwork.swift` (routes per stop, stops and destinations per route and direction),
     `StopCodes.swift`, `Watch.swift`.
-  - `Sources/HeadwayCore/ServiceStatus.swift` (per-route and per-bus delays, cancelled trips, trips without a position),
+  - `Sources/RoutelineCore/ServiceStatus.swift` (per-route and per-bus delays, cancelled trips, trips without a position),
     `Geometry.swift` (distances, nearest point on a line, bus-to-route distance), `Arrivals.swift` (stop board, remaining
     stops of a trip).
-  - `Sources/HeadwayCore/Realtime/`: `RealtimeDecoder.swift` (protobuf to plain structs), `RealtimeModels.swift`,
+  - `Sources/RoutelineCore/Realtime/`: `RealtimeDecoder.swift` (protobuf to plain structs), `RealtimeModels.swift`,
     `RealtimeClient.swift` (async fetch of the three feeds).
-  - `Sources/HeadwayCore/Generated/gtfs-realtime.pb.swift`: generated from `proto/gtfs-realtime.proto`; do not edit.
+  - `Sources/RoutelineCore/Generated/gtfs-realtime.pb.swift`: generated from `proto/gtfs-realtime.proto`; do not edit.
   - `Sources/feedanalysis/`: command-line tool that compares recordings with the timetable (`Report.swift`).
-  - `Tests/HeadwayCoreTests/`: Swift Testing. `RealFeedTests` runs only when a downloaded feed exists in `data/feeds/`.
+  - `Tests/RoutelineCoreTests/`: Swift Testing. `RealFeedTests` runs only when a downloaded feed exists in `data/feeds/`.
 - Important directories: `tools/` (recorder, pull script, helpers), `collector/` (Cloudflare Worker that records the feeds;
   see its README), `docs/`, `proto/`, `data/` (recorded feeds, logs, launchd plist, collector token; outside Git).
 - Findings that shape the design are in `docs/data-sources.md`: predictions carry no delay, so delay is computed
   against the timetable; positions can be stale by more than a minute.
 - Constraint: free stack only; no paid services. A free personal Apple ID is enough for installing on the user's own
   iPhone (re-signing every 7 days); the paid Developer Program is only needed to distribute (TestFlight, App Store).
-- Signing: iOS rejects self-signed certificates (unlike macOS apps), so Headway uses the Apple Development certificate
+- Signing: iOS rejects self-signed certificates (unlike macOS apps), so Routeline uses the Apple Development certificate
   of the user's free Personal Team; the team id is kept in the uncommitted `Config/Local.xcconfig`.
   `docs/run-on-iphone.md` has the steps and the TestFlight note.
 
@@ -262,13 +267,13 @@ The author's general workspace rules (outside this repository) apply too; this f
 - Analyse a recording: `swift build -c release && .build/release/feedanalysis report data/feeds/<date>`
   (also `schedule <zip>`, `sample <dir>`, `shape <dir>`, `deviation <dir>` (how far buses stray from route lines) and
   `plan <dir> <from> <to> [HH:mm | yyyy-MM-ddTHH:mm]` to try the planner on the real timetable).
-- Regenerate protobuf code: `protoc --swift_out=Sources/HeadwayCore/Generated --swift_opt=Visibility=Public -I proto proto/gtfs-realtime.proto`
+- Regenerate protobuf code: `protoc --swift_out=Sources/RoutelineCore/Generated --swift_opt=Visibility=Public -I proto proto/gtfs-realtime.proto`
   (needs `brew install protobuf swift-protobuf`).
 - Tools installed with Homebrew for this project: protobuf, swift-protobuf, pmtiles, xcodegen.
 - App: `xcodegen generate`, then
-  `xcodebuild -project Headway.xcodeproj -scheme Headway -destination 'platform=iOS Simulator,name=iPhone 18 Pro' -derivedDataPath build/DerivedData build CODE_SIGNING_ALLOWED=NO`.
+  `xcodebuild -project Routeline.xcodeproj -scheme Routeline -destination 'platform=iOS Simulator,name=iPhone 18 Pro' -derivedDataPath build/DerivedData build CODE_SIGNING_ALLOWED=NO`.
 - Tests: `swift test` (data layer and the tool),
-  `xcodebuild test -project Headway.xcodeproj -scheme Headway -destination 'platform=iOS Simulator,name=iPhone 18 Pro' CODE_SIGNING_ALLOWED=NO`
+  `xcodebuild test -project Routeline.xcodeproj -scheme Routeline -destination 'platform=iOS Simulator,name=iPhone 18 Pro' CODE_SIGNING_ALLOWED=NO`
   (app; use the simulator's UDID when two are booted) and `cd collector && npm test` (runs the Worker in Cloudflare's
   runtime locally). The counts are in the README's Quality checks; update them there when tests are added.
 - Strings: `tools/add_strings.py` adds or updates Japanese translations in the catalog from JSON on stdin.

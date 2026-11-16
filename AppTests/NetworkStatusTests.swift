@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 
-@testable import Headway
+@testable import Routeline
 
 @Suite struct NetworkStatusTests {
   @Test func nothingIsSlowedWhenTheRiderDoesNotSaveData() {

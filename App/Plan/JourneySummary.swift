@@ -1,5 +1,5 @@
 import Foundation
-import HeadwayCore
+import RoutelineCore
 
 /// A journey as lines of plain text, for sharing and for reminders.
 struct JourneySummary {

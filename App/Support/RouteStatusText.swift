@@ -1,5 +1,5 @@
 import Foundation
-import HeadwayCore
+import RoutelineCore
 
 /// What to tell the rider about a route that shows no buses: not an error, but one of a few ordinary reasons.
 struct RouteLiveStatus: Equatable {

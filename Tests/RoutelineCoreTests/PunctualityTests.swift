@@ -1,11 +1,11 @@
 import Foundation
 import Testing
 
-@testable import HeadwayCore
+@testable import RoutelineCore
 
 /// A straight route east along latitude 43.0 with four stops 1,000 m apart, scheduled at 08:00, 08:05, 08:10, 08:15.
 private func makeLineSchedule() throws -> Schedule {
-  let dir = FileManager.default.temporaryDirectory.appendingPathComponent("headway-punct-\(UUID().uuidString)")
+  let dir = FileManager.default.temporaryDirectory.appendingPathComponent("routeline-punct-\(UUID().uuidString)")
   try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
   // 1,000 m of longitude at latitude 43 is about 0.012283 degrees.
   let step = 1_000 / (111_320 * cos(43.0 * .pi / 180))

@@ -1,5 +1,5 @@
 import Foundation
-import HeadwayCore
+import RoutelineCore
 
 enum AppearanceMode: String, Codable, CaseIterable, Identifiable {
   case system, light, dark

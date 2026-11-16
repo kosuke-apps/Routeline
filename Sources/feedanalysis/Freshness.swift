@@ -1,5 +1,5 @@
 import Foundation
-import HeadwayCore
+import RoutelineCore
 
 /// How "live" is the vehicle feed, really? Looks at three delays between a bus and the screen:
 /// the bus's own report interval, the server's refresh interval, and how old a position already is when we fetch it.

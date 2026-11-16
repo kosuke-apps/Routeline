@@ -1995,13 +1995,13 @@
         }
       }
     },
-    "Location is turned off for Headway. You can turn it on in Settings.": {
+    "Location is turned off for Routeline. You can turn it on in Settings.": {
       "extractionState": "manual",
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Headway の位置情報がオフです．設定アプリでオンにできます．"
+            "value": "Routeline の位置情報がオフです．設定アプリでオンにできます．"
           }
         }
       }
@@ -3002,13 +3002,13 @@
         }
       }
     },
-    "Notifications are turned off for Headway. You can turn them on in Settings.": {
+    "Notifications are turned off for Routeline. You can turn them on in Settings.": {
       "extractionState": "manual",
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Headway の通知がオフです．設定アプリでオンにできます．"
+            "value": "Routeline の通知がオフです．設定アプリでオンにできます．"
           }
         }
       }
@@ -3618,13 +3618,13 @@
         }
       }
     },
-    "Headway looks at your routes whenever its live data updates while it is open, and now and then in the background when iOS allows it. There is no server behind this, so a notification can come late, or not at all, if iOS does not wake the app. Late means more than 5 minutes behind the timetable, early more than 2 minutes ahead.": {
+    "Routeline looks at your routes whenever its live data updates while it is open, and now and then in the background when iOS allows it. There is no server behind this, so a notification can come late, or not at all, if iOS does not wake the app. Late means more than 5 minutes behind the timetable, early more than 2 minutes ahead.": {
       "extractionState": "manual",
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Headway は，アプリを開いている間はライブデータが更新されるたびに，バックグラウンドでは iOS が許可したときに時々，選んだ路線を確認します．サーバーを使わないため，iOS がアプリを起動しない場合は通知が遅れたり届かなかったりします．「遅れ」は時刻表より5分超，「早い」は2分超です．"
+            "value": "Routeline は，アプリを開いている間はライブデータが更新されるたびに，バックグラウンドでは iOS が許可したときに時々，選んだ路線を確認します．サーバーを使わないため，iOS がアプリを起動しない場合は通知が遅れたり届かなかったりします．「遅れ」は時刻表より5分超，「早い」は2分超です．"
           }
         }
       }
@@ -3651,13 +3651,13 @@
         }
       }
     },
-    "Allow notifications for Headway in the iPhone's Settings to get these messages.": {
+    "Allow notifications for Routeline in the iPhone's Settings to get these messages.": {
       "extractionState": "manual",
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "通知を受け取るには，iPhone の設定で Headway の通知を許可してください．"
+            "value": "通知を受け取るには，iPhone の設定で Routeline の通知を許可してください．"
           }
         }
       }
@@ -4325,13 +4325,13 @@
         }
       }
     },
-    "Not enough history for this yet. Headway keeps recording, so it fills in as days go by.": {
+    "Not enough history for this yet. Routeline keeps recording, so it fills in as days go by.": {
       "extractionState": "manual",
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "履歴がまだ足りません．Headway は記録を続けているので，日が経つにつれて増えていきます．"
+            "value": "履歴がまだ足りません．Routeline は記録を続けているので，日が経つにつれて増えていきます．"
           }
         }
       }
@@ -4677,13 +4677,13 @@
         }
       }
     },
-    "System default follows iOS Settings > Headway > Language. Dates, numbers and distances follow your phone's region. The location permission message and the app's name come from iOS and keep its language. The choice stays on this phone.": {
+    "System default follows iOS Settings > Routeline > Language. Dates, numbers and distances follow your phone's region. The location permission message and the app's name come from iOS and keep its language. The choice stays on this phone.": {
       "extractionState": "manual",
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "「システムの既定」は，iOS の設定 > Headway > 言語に従います．日付・数字・距離は，端末の地域設定に従います．位置情報の許可のメッセージとアプリ名は iOS が出すので，iOS の言語のままです．この選択は，この端末の中だけに保存されます．"
+            "value": "「システムの既定」は，iOS の設定 > Routeline > 言語に従います．日付・数字・距離は，端末の地域設定に従います．位置情報の許可のメッセージとアプリ名は iOS が出すので，iOS の言語のままです．この選択は，この端末の中だけに保存されます．"
           }
         }
       }
@@ -5095,13 +5095,13 @@
         }
       }
     },
-    "What Headway downloaded, counted by the app: the data itself, without the headers of each request, so iOS Settings (Cellular) shows a little more.": {
+    "What Routeline downloaded, counted by the app: the data itself, without the headers of each request, so iOS Settings (Cellular) shows a little more.": {
       "extractionState": "manual",
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Headway が取得したデータ量を，アプリ側で数えたものです．各通信のヘッダは含まないため，iOS の設定（モバイル通信）の数字はこれより少し多くなります．"
+            "value": "Routeline が取得したデータ量を，アプリ側で数えたものです．各通信のヘッダは含まないため，iOS の設定（モバイル通信）の数字はこれより少し多くなります．"
           }
         }
       }
@@ -5311,13 +5311,13 @@
         }
       }
     },
-    "Headway looks at your routes whenever its live data updates while it is open, and now and then in the background when iOS allows it. There is no server behind this, so a notification can come late, or not at all, if iOS does not wake the app. Late means more than %lld minutes behind the timetable, early more than %lld minutes ahead. Each destination and direction of a route (D2 to Epic Campus, D1 to the hospital) is judged and told on its own.": {
+    "Routeline looks at your routes whenever its live data updates while it is open, and now and then in the background when iOS allows it. There is no server behind this, so a notification can come late, or not at all, if iOS does not wake the app. Late means more than %lld minutes behind the timetable, early more than %lld minutes ahead. Each destination and direction of a route (D2 to Epic Campus, D1 to the hospital) is judged and told on its own.": {
       "extractionState": "manual",
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Headway は，アプリを開いている間はライブデータが更新されるたびに，バックグラウンドでは iOS が許可したときに時々，選んだ路線を確認します．サーバーを使わないため，iOS がアプリを起動しない場合は通知が遅れたり届かなかったりします．「遅れ」は時刻表より%1$lld分超，「早い」は%2$lld分超です．路線の行き先と方向（D2 のエピック・キャンパス行き，D1 の病院行きなど）ごとに判定して通知します．"
+            "value": "Routeline は，アプリを開いている間はライブデータが更新されるたびに，バックグラウンドでは iOS が許可したときに時々，選んだ路線を確認します．サーバーを使わないため，iOS がアプリを起動しない場合は通知が遅れたり届かなかったりします．「遅れ」は時刻表より%1$lld分超，「早い」は%2$lld分超です．路線の行き先と方向（D2 のエピック・キャンパス行き，D1 の病院行きなど）ごとに判定して通知します．"
           }
         }
       }

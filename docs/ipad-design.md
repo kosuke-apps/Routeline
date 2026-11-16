@@ -1,4 +1,4 @@
-# Headway on iPad: design note
+# Routeline on iPad: design note
 
 Status: implemented in the 0.8 series (see the notes marked **Changed** below, where the build taught something). Written 2026-10-31 for version 0.7.5 (`81ff05e`).
 
@@ -8,7 +8,7 @@ not promised).
 
 ## 1. What was looked at, and what was seen
 
-Observation, not opinion. Headway 0.7.5 was built with `TARGETED_DEVICE_FAMILY` set to `1,2` and nothing else changed, and run
+Observation, not opinion. Routeline 0.7.5 was built with `TARGETED_DEVICE_FAMILY` set to `1,2` and nothing else changed, and run
 in the iPad Pro 13-inch simulator (iOS 27.0), portrait and landscape, light appearance, with the live city feeds.
 
 - The map fills the screen and works. The three round buttons (search, routes, my location) sit at the right edge and the
@@ -23,7 +23,7 @@ in the iPad Pro 13-inch simulator (iOS 27.0), portrait and landscape, light appe
 - Orientation: `Info.plist` lists portrait only, yet the app rotated to landscape in the iPad simulator. For an iPad app the
   four orientations should be declared on purpose (`UISupportedInterfaceOrientations~ipad`), not left to happen.
 - Mac: `xcodebuild` with the destination "My Mac (Designed for iPad)" built the current app successfully. The product is the same
-  arm64 iOS build (`Debug-iphoneos/Headway.app`, platform IOS, with `MapLibre.framework`); the MapLibre package ships only iOS
+  arm64 iOS build (`Debug-iphoneos/Routeline.app`, platform IOS, with `MapLibre.framework`); the MapLibre package ships only iOS
   device and iOS simulator slices, and a Designed-for-iPad app uses the iOS slice. It has not been run on the Mac yet.
 
 Everything below that says "will" is a proposal.
@@ -175,7 +175,7 @@ Drag and drop: none. The app has nothing the rider drags (the one share action i
 ## 5. Split View, Stage Manager, small widths, text size
 
 - One window. `UIApplicationSupportsMultipleScenes` is not declared today and stays that way: the model (selection, sheet, poll,
-  data meter, notification ledger) is created once in `HeadwayApp` and shared, and two windows would show the same selection and
+  data meter, notification ledger) is created once in `RoutelineApp` and shared, and two windows would show the same selection and
   could not be told apart. Multiple windows are out of scope for this version.
 - `UIRequiresFullScreen` is not set, so Split View, Slide Over and Stage Manager are available.
 - The window is any size from about 320 pt up. Under 700 pt the compact layout applies; at 1/3 and 1/2 of an iPad that is the

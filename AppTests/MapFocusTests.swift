@@ -1,9 +1,9 @@
 import Foundation
-import HeadwayCore
+import RoutelineCore
 import Testing
 import UIKit
 
-@testable import Headway
+@testable import Routeline
 
 @Suite struct MapFocusTests {
   private static func overlay() -> MapOverlay {

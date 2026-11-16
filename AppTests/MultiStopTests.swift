@@ -1,12 +1,12 @@
 import Foundation
-import HeadwayCore
+import RoutelineCore
 import Testing
 
-@testable import Headway
+@testable import Routeline
 
 @MainActor @Suite struct MultiStopTests {
   private func makeSettings() -> AppSettings {
-    AppSettings(defaults: UserDefaults(suiteName: "headway-tests-\(UUID().uuidString)")!)
+    AppSettings(defaults: UserDefaults(suiteName: "routeline-tests-\(UUID().uuidString)")!)
   }
 
   private func place(_ name: String, _ lat: Double) -> PlaceChoice {

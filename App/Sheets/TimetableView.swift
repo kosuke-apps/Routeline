@@ -1,4 +1,4 @@
-import HeadwayCore
+import RoutelineCore
 import SwiftUI
 
 /// The full day's timetable for a stop: hours down the side, minutes across, one block per route and direction.

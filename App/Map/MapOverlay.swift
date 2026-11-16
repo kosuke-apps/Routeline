@@ -1,6 +1,6 @@
 import CoreLocation
 import Foundation
-import HeadwayCore
+import RoutelineCore
 
 /// What the map draws of the timetable: route lines, stops and which routes serve them.
 ///

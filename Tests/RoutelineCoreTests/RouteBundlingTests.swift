@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 
-@testable import HeadwayCore
+@testable import RoutelineCore
 
 @Suite struct RouteBundlingTests {
   /// A straight east-west street at `latitude`, from longitude `from` to `to`, a point every 0.0003 degrees (about 25 m).

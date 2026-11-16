@@ -1,5 +1,5 @@
 import Foundation
-import HeadwayCore
+import RoutelineCore
 import SwiftProtobuf
 import Testing
 import ZIPFoundation
@@ -72,7 +72,7 @@ private final class BundleToken {}
   }
 
   @Test func theNightlyToolSkipsAnUnreadableSnapshotAndExitsCleanly() throws {
-    let root = FileManager.default.temporaryDirectory.appendingPathComponent("headway-tool-\(UUID().uuidString)")
+    let root = FileManager.default.temporaryDirectory.appendingPathComponent("routeline-tool-\(UUID().uuidString)")
     defer { try? FileManager.default.removeItem(at: root) }
     try recordings(in: root)
     let output = root.appendingPathComponent("punctuality.json")

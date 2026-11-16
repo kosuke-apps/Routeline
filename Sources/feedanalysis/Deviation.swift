@@ -1,5 +1,5 @@
 import Foundation
-import HeadwayCore
+import RoutelineCore
 
 /// How far do buses stray from the route line the timetable says they follow?
 ///

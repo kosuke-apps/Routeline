@@ -1,11 +1,11 @@
 import Foundation
 import Testing
 
-@testable import Headway
+@testable import Routeline
 
 @MainActor @Suite struct AppCommandTests {
   private func model() -> AppModel {
-    AppModel(settings: AppSettings(defaults: UserDefaults(suiteName: "headway-tests-\(UUID().uuidString)")!))
+    AppModel(settings: AppSettings(defaults: UserDefaults(suiteName: "routeline-tests-\(UUID().uuidString)")!))
   }
 
   @Test func everyCommandHasItsOwnKey() {

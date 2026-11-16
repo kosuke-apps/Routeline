@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 
-@testable import HeadwayCore
+@testable import RoutelineCore
 
 @Suite struct WatchTests {
   private let now = Date(timeIntervalSince1970: 1_800_000_000)

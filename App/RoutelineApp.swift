@@ -2,7 +2,7 @@ import SwiftUI
 import UserNotifications
 
 @main
-struct HeadwayApp: App {
+struct RoutelineApp: App {
   @State private var model: AppModel
 
   init() {
@@ -24,7 +24,7 @@ struct HeadwayApp: App {
     // The hardware keyboard: the shortcut list that holding ⌘ brings up on an iPad. The same commands are also buttons in the
     // view tree (`KeyboardShortcuts`), because a Mac that runs the iPad app shows no custom menu.
     .commands {
-      // The system's own "Settings…" (⌘,) would open the iPad's Settings app, not the one in Headway.
+      // The system's own "Settings…" (⌘,) would open the iPad's Settings app, not the one in Routeline.
       CommandGroup(replacing: .appSettings) {
         Button("Settings…") { AppCommand.settings.perform(model) }.keyboardShortcut(",")
       }

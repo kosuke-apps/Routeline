@@ -2,7 +2,7 @@ import Foundation
 import SwiftProtobuf
 import Testing
 
-@testable import HeadwayCore
+@testable import RoutelineCore
 
 @Suite(.serialized) struct RealtimeClientTests {
   @Test func parsesHTTPDates() {

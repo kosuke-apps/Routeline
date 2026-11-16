@@ -1,4 +1,4 @@
-name: Headway
+name: Routeline
 options:
   bundleIdPrefix: dev.kosuke
   developmentLanguage: en
@@ -14,13 +14,13 @@ settings:
     MARKETING_VERSION: "0.7.6"
     CURRENT_PROJECT_VERSION: "22"
 packages:
-  Headway:
+  Routeline:
     path: .
   MapLibre:
     url: https://github.com/maplibre/maplibre-gl-native-distribution
     from: 6.31.0
 targets:
-  Headway:
+  Routeline:
     type: application
     platform: iOS
     sources:
@@ -41,14 +41,14 @@ targets:
       - path: data/seed/mmt_gtfs.zip
         buildPhase: resources
     dependencies:
-      - package: Headway
-        product: HeadwayCore
+      - package: Routeline
+        product: RoutelineCore
       - package: MapLibre
         product: MapLibre
     info:
       path: App/Info.plist
       properties:
-        CFBundleDisplayName: Headway
+        CFBundleDisplayName: Routeline
         NSHumanReadableCopyright: "Copyright © 2026 Kosuke Satake. MIT License."
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
@@ -60,7 +60,7 @@ targets:
           - UIInterfaceOrientationPortraitUpsideDown
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
-        NSLocationWhenInUseUsageDescription: Headway shows where you are on the map and finds nearby stops.
+        NSLocationWhenInUseUsageDescription: Routeline shows where you are on the map and finds nearby stops.
         UIBackgroundModes:
           - fetch
         BGTaskSchedulerPermittedIdentifiers:
@@ -73,24 +73,24 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         TARGETED_DEVICE_FAMILY: "1,2"
         SWIFT_EMIT_LOC_STRINGS: YES
-  HeadwayTests:
+  RoutelineTests:
     type: bundle.unit-test
     platform: iOS
     sources:
       - AppTests
     dependencies:
-      - target: Headway
-      - package: Headway
-        product: HeadwayCore
+      - target: Routeline
+      - package: Routeline
+        product: RoutelineCore
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: dev.kosuke.headway.tests
         GENERATE_INFOPLIST_FILE: YES
 schemes:
-  Headway:
+  Routeline:
     build:
       targets:
-        Headway: all
+        Routeline: all
     test:
       targets:
-        - HeadwayTests
+        - RoutelineTests

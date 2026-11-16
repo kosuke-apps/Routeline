@@ -1,6 +1,6 @@
 # Privacy
 
-Headway has no account, no analytics, no advertising and no server of its own. Nothing about you or your phone is sent
+Routeline has no account, no analytics, no advertising and no server of its own. Nothing about you or your phone is sent
 to the author. This was checked against the source on 2026-10-25, for version 0.7.5 (every network address in the code is
 listed below), and a running copy's connections were watched for 20 minutes the same day: all of them went to the City's
 live-bus address below.
@@ -8,14 +8,14 @@ live-bus address below.
 ## What stays on your phone
 
 - **Your location**, if you allow it ("While Using the App"). It shows where you are on the map, finds nearby stops, and
-  starts a trip "from my location". It is read by the app on the phone and is never sent anywhere by Headway.
+  starts a trip "from my location". It is read by the app on the phone and is never sent anywhere by Routeline.
 - **Your choice of language** (Settings > Behavior > Language). It is one more setting and stays on the phone like the rest.
 - **Your settings, favourite stops and routes, saved places (Home, Work, ...), saved and recent trips, the routes and single
   destinations you watch, and how late or early a bus must be before you are told.** They are stored in the app's own storage on the phone (they are part of an iCloud or computer backup of the
   phone if you make one) and nowhere else. "Reset settings" clears the settings and keeps the favourites.
 - **A data meter** (Settings > Live buses > the icon next to "Save mobile data"): how many bytes of each kind the app has
   downloaded, on Wi-Fi and on mobile data, since a date you can reset. It is counted by the app and stays on the phone.
-- **Notifications** about watched routes and trip reminders are scheduled on the phone. Headway does not use push
+- **Notifications** about watched routes and trip reminders are scheduled on the phone. Routeline does not use push
   notifications. The small picture that comes with a late or early notification is drawn by the app on the phone and
   kept in a temporary file for iOS to show; it is not downloaded and nothing about it is sent.
 

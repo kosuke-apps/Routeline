@@ -1,12 +1,12 @@
 import Foundation
-import HeadwayCore
+import RoutelineCore
 import Testing
 
-@testable import Headway
+@testable import Routeline
 
 @MainActor @Suite struct PlannerSettingsTests {
   private func makeSettings() -> AppSettings {
-    AppSettings(defaults: UserDefaults(suiteName: "headway-tests-\(UUID().uuidString)")!)
+    AppSettings(defaults: UserDefaults(suiteName: "routeline-tests-\(UUID().uuidString)")!)
   }
 
   private func point(_ name: String, _ lat: Double = 43.07, _ lon: Double = -89.40, stop: String? = nil) -> PlanPoint {
@@ -64,7 +64,7 @@ import Testing
   }
 
   @Test func plannerPreferencesSurviveARestart() {
-    let suite = "headway-tests-\(UUID().uuidString)"
+    let suite = "routeline-tests-\(UUID().uuidString)"
     let defaults = UserDefaults(suiteName: suite)!
     let first = AppSettings(defaults: defaults)
     first.values.walkSpeed = .slow

@@ -1,5 +1,5 @@
 import Foundation
-import HeadwayCore
+import RoutelineCore
 
 /// A route can have several variants in one direction (for example "2-VERONA" and "2-EPIC CAMPUS"). Does the variant a
 /// bus is assigned to in the feed match the line it actually drives on?
