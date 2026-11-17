@@ -89,7 +89,7 @@ export async function collect(env: Env, scheduledTime: number): Promise<void> {
 
 /** Fetches a feed and stores it unless it is the same as the last one. Returns true when something was stored. */
 export async function snapshot(env: Env, feed: Feed): Promise<boolean> {
-  const response = await fetch(`${env.FEED_BASE ?? FEED_BASE}/${feed}`, { headers: { "User-Agent": "headway-collector/0.1" } });
+  const response = await fetch(`${env.FEED_BASE ?? FEED_BASE}/${feed}`, { headers: { "User-Agent": "routeline-collector/0.1" } });
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   const bytes = new Uint8Array(await response.arrayBuffer());
   // The city publishes an empty file while it rebuilds the feed; there is nothing to keep in that.
@@ -137,7 +137,7 @@ const json = (body: unknown, status = 200) =>
 /** The HTTP side. Exported for tests. */
 export async function route(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url);
-  if (url.pathname === "/") return new Response("headway-collector\n", { headers: { "Content-Type": "text/plain" } });
+  if (url.pathname === "/") return new Response("routeline-collector\n", { headers: { "Content-Type": "text/plain" } });
 
   if (!env.EXPORT_TOKEN) return json({ error: "EXPORT_TOKEN is not set" }, 503);
   await ensureSchema(env);

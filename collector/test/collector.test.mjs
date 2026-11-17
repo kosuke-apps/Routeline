@@ -20,7 +20,7 @@ const cleanups = [];
 /** Starts `wrangler dev` on a free port with a database of its own, and waits until it answers. */
 async function startWorker(vars) {
   const port = await freePort();
-  const persist = mkdtempSync(join(tmpdir(), "headway-collector-"));
+  const persist = mkdtempSync(join(tmpdir(), "routeline-collector-"));
   const args = ["wrangler", "dev", "--port", String(port), "--test-scheduled", "--persist-to", persist, "--log-level", "error"];
   for (const [name, value] of Object.entries(vars)) args.push("--var", `${name}:${value}`);
   const child = spawn("npx", args, { stdio: "ignore", env: { ...process.env, WRANGLER_SEND_METRICS: "false" }, detached: true });
@@ -85,7 +85,7 @@ async function list() {
 test("the front page is public and says nothing", async () => {
   const response = await fetch(`${collector}/`);
   assert.equal(response.status, 200);
-  assert.equal(await response.text(), "headway-collector\n");
+  assert.equal(await response.text(), "routeline-collector\n");
 });
 
 test("the export needs the token", async () => {
@@ -174,11 +174,11 @@ test("tools/pull_feeds.py writes the files the analysis reads and empties the co
   const waiting = (await list()).length;
   assert.ok(waiting >= 3);
 
-  const root = mkdtempSync(join(tmpdir(), "headway-feeds-"));
+  const root = mkdtempSync(join(tmpdir(), "routeline-feeds-"));
   cleanups.push(() => rmSync(root, { recursive: true, force: true }));
   const script = new URL("../../tools/pull_feeds.py", import.meta.url).pathname;
   const output = execFileSync("python3", [script, "--root", root, "--no-static"], {
-    env: { ...process.env, HEADWAY_COLLECTOR_URL: collector, HEADWAY_COLLECTOR_TOKEN: TOKEN },
+    env: { ...process.env, ROUTELINE_COLLECTOR_URL: collector, ROUTELINE_COLLECTOR_TOKEN: TOKEN },
   }).toString();
   assert.match(output, new RegExp(`pulled ${waiting} snapshots`));
 

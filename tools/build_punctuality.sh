@@ -6,7 +6,7 @@
 #   tools/build_punctuality.sh            # add new days to the observation database and export
 #   tools/build_punctuality.sh --force    # redo every day
 #
-# A launchd job (data/launchd/dev.kosuke.headway.punctuality.plist) runs this every night at 04:30.
+# A launchd job (data/launchd/dev.kosuke.routeline.punctuality.plist) runs this every night at 04:30.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 mkdir -p data/punctuality

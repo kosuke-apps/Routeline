@@ -50,13 +50,13 @@ import Testing
   }
 
   @MainActor @Test func theMeterKeepsItsCountsBetweenLaunchesAndCanBeReset() {
-    let suite = UserDefaults(suiteName: "dev.kosuke.headway.tests.meter")!
-    suite.removePersistentDomain(forName: "dev.kosuke.headway.tests.meter")
+    let suite = UserDefaults(suiteName: "dev.kosuke.routeline.tests.meter")!
+    suite.removePersistentDomain(forName: "dev.kosuke.routeline.tests.meter")
     let first = DataMeter(defaults: suite)
     first.record(.predictions, bytes: 160_000, metered: false)
     #expect(DataMeter(defaults: suite).usage.bytes(.predictions) == 160_000)
     first.reset()
     #expect(DataMeter(defaults: suite).usage.bytes(.predictions) == 0)
-    suite.removePersistentDomain(forName: "dev.kosuke.headway.tests.meter")
+    suite.removePersistentDomain(forName: "dev.kosuke.routeline.tests.meter")
   }
 }

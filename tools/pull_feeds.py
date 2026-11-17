@@ -7,7 +7,7 @@ the collector to delete them, which keeps its small free database from filling u
 (the static GTFS zip), which the collector does not handle.
 
 Settings come from data/collector/config.json ({"url": "https://...", "token": "..."}) or from the environment
-(HEADWAY_COLLECTOR_URL, HEADWAY_COLLECTOR_TOKEN). Standard library only.
+(ROUTELINE_COLLECTOR_URL, ROUTELINE_COLLECTOR_TOKEN). Standard library only.
 
     python3 tools/pull_feeds.py            # pull everything new
     python3 tools/pull_feeds.py --status   # what the collector holds, and when it last ran
@@ -35,13 +35,13 @@ WORKERS = 8
 
 
 def load_config() -> tuple[str, str]:
-    url = os.environ.get("HEADWAY_COLLECTOR_URL", "")
-    token = os.environ.get("HEADWAY_COLLECTOR_TOKEN", "")
+    url = os.environ.get("ROUTELINE_COLLECTOR_URL", "")
+    token = os.environ.get("ROUTELINE_COLLECTOR_TOKEN", "")
     if (not url or not token) and CONFIG.exists():
         data = json.loads(CONFIG.read_text())
         url, token = url or data.get("url", ""), token or data.get("token", "")
     if not url or not token:
-        sys.exit(f"No collector configured: write {CONFIG} or set HEADWAY_COLLECTOR_URL and HEADWAY_COLLECTOR_TOKEN.")
+        sys.exit(f"No collector configured: write {CONFIG} or set ROUTELINE_COLLECTOR_URL and ROUTELINE_COLLECTOR_TOKEN.")
     return url.rstrip("/"), token
 
 
@@ -51,7 +51,7 @@ class Collector:
 
     def request(self, path: str, method: str = "GET") -> tuple[bytes, dict]:
         request = urllib.request.Request(
-            self.url + path, method=method, headers={"Authorization": f"Bearer {self.token}", "User-Agent": "headway-pull/0.1"}
+            self.url + path, method=method, headers={"Authorization": f"Bearer {self.token}", "User-Agent": "routeline-pull/0.1"}
         )
         # A dropped connection or a failed name lookup is usually over in seconds: try again before giving up, so that a long
         # catch-up does not stop at the first hiccup.

@@ -38,7 +38,7 @@ Measured on 2026-10-03/04 from the Mac recorder: about 1,200 vehicle snapshots (
 (12 MB gzipped, about 45 MB as sent) and 65 alert snapshots a day. Watch the first days with `tools/pull_feeds.py
 --status` and the dashboard's error counts.
 
-Deployed on 2026-10-04 (`https://headway-collector.<account>.workers.dev`; the Mac's copy of the address and token is in
+Deployed on 2026-10-04 (`https://routeline-collector.<account>.workers.dev`; the Mac's copy of the address and token is in
 `data/collector/config.json`). The Mac recorder was stopped the same day; the hourly pull job runs instead.
 
 ## Setup
@@ -56,11 +56,11 @@ openssl rand -hex 32 > ../data/collector/token
 npx wrangler secret put EXPORT_TOKEN < ../data/collector/token
 ```
 
-Then tell the Mac where the collector is (use the `https://headway-collector.<your-name>.workers.dev` address that
+Then tell the Mac where the collector is (use the `https://routeline-collector.<your-name>.workers.dev` address that
 `npm run deploy` printed):
 
 ```bash
-printf '{"url": "%s", "token": "%s"}\n' "https://headway-collector.<your-name>.workers.dev" "$(cat ../data/collector/token)" > ../data/collector/config.json
+printf '{"url": "%s", "token": "%s"}\n' "https://routeline-collector.<your-name>.workers.dev" "$(cat ../data/collector/token)" > ../data/collector/config.json
 python3 ../tools/pull_feeds.py --status     # shows the last run once the first minute has passed
 python3 ../tools/pull_feeds.py              # pulls what is there
 ```
@@ -68,14 +68,14 @@ python3 ../tools/pull_feeds.py              # pulls what is there
 `data/` is outside Git, so the token never leaves the Mac. The Worker address is not secret but is not useful without the
 token either.
 
-To pull every hour without thinking about it, install the launchd job (`data/launchd/dev.kosuke.headway.pull.plist`).
+To pull every hour without thinking about it, install the launchd job (`data/launchd/dev.kosuke.routeline.pull.plist`).
 Copy it into `~/Library/LaunchAgents` first: a job loaded straight from `data/launchd/` is forgotten when the Mac restarts,
 and the collector keeps only 6 days, so every day without a pull is lost for good.
 
 ```bash
-cp data/launchd/dev.kosuke.headway.pull.plist ~/Library/LaunchAgents/
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/dev.kosuke.headway.pull.plist
-launchctl print gui/$(id -u)/dev.kosuke.headway.pull | head -3     # check that it is loaded
+cp data/launchd/dev.kosuke.routeline.pull.plist ~/Library/LaunchAgents/
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/dev.kosuke.routeline.pull.plist
+launchctl print gui/$(id -u)/dev.kosuke.routeline.pull | head -3     # check that it is loaded
 ```
 
 After a restart, `python3 tools/pull_feeds.py --status` shows when the collector last ran and how much is waiting.
@@ -83,7 +83,7 @@ After a restart, `python3 tools/pull_feeds.py --status` shows when the collector
 When the collector is working, stop the Mac recorder so that the two do not record the same thing:
 
 ```bash
-launchctl bootout gui/$(id -u)/dev.kosuke.headway.recorder
+launchctl bootout gui/$(id -u)/dev.kosuke.routeline.recorder
 ```
 
 ## Tests
@@ -98,8 +98,8 @@ npm test        # runs the Worker in Cloudflare's runtime (workerd) with a fake 
 
 ```bash
 cd collector
-npx wrangler delete headway-collector       # the Worker
-npx wrangler d1 delete headway-collector    # its database
+npx wrangler delete routeline-collector       # the Worker
+npx wrangler d1 delete routeline-collector    # its database
 ```
 
 ## Limits worth knowing

@@ -64,10 +64,10 @@ targets:
         UIBackgroundModes:
           - fetch
         BGTaskSchedulerPermittedIdentifiers:
-          - dev.kosuke.headway.watch
+          - dev.kosuke.routeline.watch
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: dev.kosuke.headway
+        PRODUCT_BUNDLE_IDENTIFIER: dev.kosuke.routeline
         GENERATE_INFOPLIST_FILE: NO
         CODE_SIGN_STYLE: Automatic
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
@@ -84,7 +84,7 @@ targets:
         product: RoutelineCore
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: dev.kosuke.headway.tests
+        PRODUCT_BUNDLE_IDENTIFIER: dev.kosuke.routeline.tests
         GENERATE_INFOPLIST_FILE: YES
 schemes:
   Routeline:

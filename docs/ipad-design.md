@@ -198,7 +198,7 @@ Planned checks (none run yet; section 1 only records that the build links):
   location" in the planner will work but may be off by far more than on a phone. To be measured and then stated in the release
   notes.
 - **Haptics**: `UISelectionFeedbackGenerator` does nothing on a Mac. The one use is optional (a setting), so no change.
-- **Background work**: `BGAppRefreshTask` (`dev.kosuke.headway.watch`) and the "pause in the background" setting. Whether a Mac
+- **Background work**: `BGAppRefreshTask` (`dev.kosuke.routeline.watch`) and the "pause in the background" setting. Whether a Mac
   runs the task, and what the scene phases are for a minimised window, is unknown and is to be observed. If the task never
   runs, notifications on the Mac work only while the window is open; the setting's text says "iOS decides", which is true on both.
 - **Notifications**: permission prompt, the late/early notification text and its small picture (a temporary file attachment).

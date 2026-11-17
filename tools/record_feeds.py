@@ -34,7 +34,7 @@ ROOT = Path(__file__).resolve().parent.parent / "data" / "feeds"
 
 
 def fetch(url: str, method: str = "GET") -> tuple[bytes, dict]:
-    request = urllib.request.Request(url, method=method, headers={"User-Agent": "headway-recorder/0.2"})
+    request = urllib.request.Request(url, method=method, headers={"User-Agent": "routeline-recorder/0.2"})
     with urllib.request.urlopen(request, timeout=30) as response:
         return response.read(), dict(response.headers)
 

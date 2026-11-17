@@ -2,4 +2,4 @@
 // developer.apple.com/account > Membership. A free Apple ID gets a "Personal Team" with its own ID.
 DEVELOPMENT_TEAM = ABCDE12345
 // If Xcode says the bundle identifier is not available, make it unique to you:
-// PRODUCT_BUNDLE_IDENTIFIER = dev.kosuke.headway.yourname
+// PRODUCT_BUNDLE_IDENTIFIER = dev.kosuke.routeline.yourname

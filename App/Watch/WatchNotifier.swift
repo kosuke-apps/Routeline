@@ -98,7 +98,7 @@ final class WatchNotifier {
 /// iOS decides when (and whether) this runs: typically no more often than every 15 minutes, less often when the phone
 /// is idle or the battery is low, and rarely for an app that is not opened regularly. It is a best effort, not an alarm.
 enum WatchBackground {
-  static let identifier = "dev.kosuke.headway.watch"
+  static let identifier = "dev.kosuke.routeline.watch"
 
   /// Must be called before the app finishes launching.
   @MainActor static func register(_ model: AppModel) {

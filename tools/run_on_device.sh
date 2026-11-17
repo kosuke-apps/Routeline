@@ -106,7 +106,7 @@ if ! xcodebuild -project Routeline.xcodeproj -scheme Routeline -configuration Re
 fi
 APP="build/Device/Build/Products/Release-iphoneos/Routeline.app"
 xcrun devicectl device install app --device "$DEVICE" "$APP"
-if ! xcrun devicectl device process launch --device "$DEVICE" dev.kosuke.headway; then
+if ! xcrun devicectl device process launch --device "$DEVICE" dev.kosuke.routeline; then
   echo
   echo "Installed, but it could not start. On the first install the $KIND must trust you as a developer:"
   echo "  Settings > General > VPN & Device Management > your Apple ID > Trust."

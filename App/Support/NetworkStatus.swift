@@ -43,7 +43,7 @@ final class NetworkStatus: @unchecked Sendable {
       }
       handler?(path.status == .satisfied)
     }
-    monitor.start(queue: DispatchQueue(label: "dev.kosuke.headway.network"))
+    monitor.start(queue: DispatchQueue(label: "dev.kosuke.routeline.network"))
   }
 
   /// True on mobile data, a personal hotspot or in Low Data Mode: where the rider's data choices for "mobile" apply.

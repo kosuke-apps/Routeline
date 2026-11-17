@@ -3,11 +3,6 @@
 An iPhone app that shows Madison, WI buses live on an offline map, with every route, stop and timetable at a glance.
 The author's general workspace rules (outside this repository) apply too; this file adds what is specific to this project.
 
-Formerly named Headway (renamed 2026-11-16). The old name stays on purpose in the bundle
-identifiers (`dev.kosuke.headway`, `.watch`, `.tests`, and the log subsystem and queue labels built on them), the launchd jobs
-`dev.kosuke.headway.*`, the collector (`headway-collector`, `HEADWAY_COLLECTOR_*`, the scripts' User-Agents), the repository's
-address until the repository is renamed, and the licence sentences until the licence is decided. Anywhere else it is a miss.
-
 ## Product
 
 - Purpose: replace the habit of opening Google Maps as a timetable. Existing apps are slow, show timetables as plain
@@ -60,7 +55,7 @@ address until the repository is renamed, and the licence sentences until the lic
     and one route (a 60 m slide is a few pieces, not 24), and every line is thinned to 1 m (`RouteBundler.simplified`).
     That took the saved copy from 13 MB (90 000 pieces) to 3 MB (23 000) and the launch from 2.5 s to 0.5 s on a Mac;
     `RouteBundlingTests` fails above 15 000 pieces per set. The timings are in the log:
-    `xcrun simctl spawn booted log show --info --last 2m --predicate 'subsystem == "dev.kosuke.headway"'` (`launchLog`).
+    `xcrun simctl spawn booted log show --info --last 2m --predicate 'subsystem == "dev.kosuke.routeline"'` (`launchLog`).
   - Crowding and detail: streets with more than three routes draw thinner lines (`crowd`, down to half; the feature's `k`),
     and from zoom 16 a second set (`detail`, `RouteBundler.overview(merge: 10, snap: 8)`) separates the two directions where
     they run apart; the sets cross-fade at zoom 16 (`a0`/`a1`). A focused route uses `directionLines`, which merge the
@@ -168,7 +163,7 @@ address until the repository is renamed, and the licence sentences until the lic
     late/early again after 45 min; the title is the route and the minutes ("D2 · 10 min late"); the body has the destination, then the way and
     the number of buses, each on its own line; no sentences and no emoji: the colour is in a small picture on the right
     (`NotificationBadge`: route colour with its name, a red or blue band with ±minutes)),
-    `App/Watch/WatchNotifier.swift` (local notifications, `BGAppRefreshTask` `dev.kosuke.headway.watch`). Best effort:
+    `App/Watch/WatchNotifier.swift` (local notifications, `BGAppRefreshTask` `dev.kosuke.routeline.watch`). Best effort:
     iOS decides when a background refresh runs.
   - `App/Settings/`: `Preferences.swift` (all user options as one tolerant Codable value, decoding falls back to
     defaults per key), `AppSettings.swift` (observable store in UserDefaults, favourites, recents, reset).
@@ -260,8 +255,8 @@ address until the repository is renamed, and the licence sentences until the lic
 ## Commands
 
 - Record feeds: `caffeinate -i python3 tools/record_feeds.py --hours 24` (writes `data/feeds/<date>/`). The
-  2026-10-03 run was started as a launchd job from `data/launchd/dev.kosuke.headway.recorder.plist` so it survives
-  the session; stop it with `launchctl bootout gui/$(id -u)/dev.kosuke.headway.recorder`.
+  2026-10-03 run was started as a launchd job from `data/launchd/dev.kosuke.routeline.recorder.plist` so it survives
+  the session; stop it with `launchctl bootout gui/$(id -u)/dev.kosuke.routeline.recorder`.
 - Smoke test of the recorder: `python3 tools/record_feeds.py --once --no-static`.
 - Build: `swift build`; test: `swift test`.
 - Analyse a recording: `swift build -c release && .build/release/feedanalysis report data/feeds/<date>`
@@ -285,13 +280,13 @@ address until the repository is renamed, and the licence sentences until the lic
 - Icon: `swift tools/make_icon.swift App/Resources/Assets.xcassets/AppIcon.appiconset` (light, dark, tinted).
 - Simulator notes: `simctl ... booted` can point at the wrong device when two are booted; use the UDID. Typing into
   a search field through the control tool is slow; wait before the next tap.
-- The 24 h feed report is written by a launchd job (`data/launchd/dev.kosuke.headway.report.plist`) to
+- The 24 h feed report is written by a launchd job (`data/launchd/dev.kosuke.routeline.report.plist`) to
   `docs/feed-analysis-2026-10-03.md` at 2026-10-04 17:10 CDT.
-- Recordings run continuously: the Cloudflare collector records, and the launchd job `dev.kosuke.headway.pull` (hourly,
+- Recordings run continuously: the Cloudflare collector records, and the launchd job `dev.kosuke.routeline.pull` (hourly,
   `tools/pull_feeds.py`) writes them to one folder per day in `data/feeds/` (about 15 MB a day); the collector keeps only
   6 days. The jobs must be loaded from `~/Library/LaunchAgents` (copies of `data/launchd/*.plist`): a job loaded straight
   from `data/launchd/` is forgotten at the next restart, which lost four days in October 2026. Check after any restart:
-  `launchctl print gui/$(id -u)/dev.kosuke.headway.pull` and `python3 tools/pull_feeds.py --status`. A nightly job (04:30)
+  `launchctl print gui/$(id -u)/dev.kosuke.routeline.pull` and `python3 tools/pull_feeds.py --status`. A nightly job (04:30)
   runs `tools/build_punctuality.sh` (it builds `feedanalysis` first, so a change to the tool takes effect that night; until
   2026-10-25 the job ran the prebuilt binary directly and a crash went unnoticed for three nights), which turns recorded bus
   positions into observed arrival times (SQLite, `data/punctuality/observations.sqlite`) and exports `data/punctuality/punctuality.json`,
