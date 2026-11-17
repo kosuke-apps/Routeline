@@ -63,4 +63,4 @@ app. The recordings are not published.
 
 ## Contact
 
-Questions about privacy: open an issue at <https://github.com/kosuke-apps/headway/issues>.
+Questions about privacy: start a discussion at <https://github.com/kosuke-apps/Routeline/discussions>.

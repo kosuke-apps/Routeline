@@ -7,7 +7,7 @@
 <p align="center"><b>A fast, live bus map for Madison, WI (Metro Transit): see where the buses are and when the next one really comes.</b></p>
 
 <p align="center">
-  <a href="https://github.com/kosuke-apps/Headway/releases/latest"><b>Download</b></a> &nbsp;·&nbsp;
+  <a href="https://github.com/kosuke-apps/Routeline/releases"><b>Releases</b></a> &nbsp;·&nbsp;
   <a href="#install">Install</a> &nbsp;·&nbsp;
   <a href="PRIVACY.md">Privacy</a> &nbsp;·&nbsp;
   <a href="https://github.com/kosuke-apps">More apps</a>
@@ -38,9 +38,9 @@
 ## Install
 
 Routeline is not in the App Store. Each release is an unsigned `.ipa`, on purpose: sign it with your own Apple ID through a
-sideloading tool such as AltStore or Sideloadly.
+sideloading tool such as AltStore or Sideloadly. The first Routeline release is being prepared.
 
-1. Download `Routeline-x.y.z-unsigned.ipa` and its `.sha256` from the [latest release](https://github.com/kosuke-apps/Headway/releases/latest).
+1. Download `Routeline-x.y.z-unsigned.ipa` and its `.sha256` from the [latest release](https://github.com/kosuke-apps/Routeline/releases/latest).
 2. Check the file: `shasum -a 256 -c Routeline-x.y.z-unsigned.ipa.sha256`.
 3. Open the `.ipa` in the sideloading tool and install it on your iPhone (iOS 17 or later).
 
@@ -159,7 +159,7 @@ tools/run_on_device.sh                                                          
 a free Apple ID the app has to be installed again every 7 days.
 
 **Or take a release build (no build needed, but a second tool is).** Each
-[release](https://github.com/kosuke-apps/Headway/releases) has an unsigned `Routeline-<version>-unsigned.ipa` and its
+[release](https://github.com/kosuke-apps/Routeline/releases) has an unsigned `Routeline-<version>-unsigned.ipa` and its
 checksum. Check the download with `shasum -a 256 -c Routeline-<version>-unsigned.ipa.sha256`, then install the `.ipa` with a
 sideloading tool that signs with your own Apple ID, such as [AltStore](https://altstore.io) or
 [Sideloadly](https://sideloadly.io). The file is deliberately unsigned, so it carries no signature of mine. With a free
